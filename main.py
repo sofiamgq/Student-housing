@@ -92,7 +92,31 @@ def adminLogIn():
   return True
 
 def newStudentAccount():
-  # gather info here
+  login = input('Choose your login: ')
+  indicator = False
+  while indicator == False:
+    flag = True
+    for user in db['students']:
+      if user.__userLogin == login:
+        flag = False
+    if flag == False:
+      print('Such login already exsists.')
+      login = input('Choose your login: ')
+    else:
+      indicator = True
+  password = input('Choose your password: ')
+  verification = input('Repeat your password: ')
+  while password != verification:
+    print('The passwords do not match. Try again.')
+    password = input('Choose your password: ')
+    verification = input('Repeat your password: ')
+  studentName = input('Enter your name: ')
+  studentSurname = input('Enter your surname: ')
+  newStudent = Student(login, password, studentName, studentSurname)
+  if not('students' in db.keys()):
+    db['students'] = []
+  db['students'].add(newStudent)
+  return newStudent
 
 def mainScreen():
   print('Welcome to the Student Housing Management System!')
