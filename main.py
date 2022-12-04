@@ -108,11 +108,23 @@ class UpperClassStudent(Student):
 test = UpperClassStudent('userLogin', 'userPassword', 'userName', 'userSurname', 'studentEmail', 'studentPhoneNum', 'studentAge', 'studentResidPrefer', 'studentRoomPref', 'studentRoommatePref')
 print(test.getStudentRoommatePref())
 
-def studentLogIn():
-  # check if data exists and password/username are matching
-  return True
-
 def facultyLogIn():
+  username = input('What is your username: ')
+  for faculty in db['faculty']:
+    if faculty.getUserName() == username:
+      continue
+    else:
+      print('This username does not exist.')
+      return False
+      password = input('Enter password: ')
+  if db['faculty'].getPassword() == password:
+    print('Login successful.')
+    return True
+  else:
+    print('Incorrect password.')
+    return False
+
+def adminLogIn():
   print ('Welcome to the faculty log in portal!')
   username=input('Please enter your username: ')
   if username in db:
