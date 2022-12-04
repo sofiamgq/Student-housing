@@ -38,7 +38,7 @@ class Student(User):
   def showAllStudentNames(self):
     return True
 
-  def showSpecificStudentInfo(self, userName)
+  def showSpecificStudentInfo(self, userName):
 # We should have a user ID system implmented, rather than looking up students by first and last name. This will stop the issue of having duplicate students with the same name. If there is a duplicate, this function should present faculty with the option to pick which student they mean (for example, by also displaying birthdate or another identifying piece of info)
     return True
 
@@ -65,6 +65,19 @@ class UpperClassStudent(Student):
 
 
 
+test = UpperClassStudent('userLogin', 'userPassword', 'userName', 'userSurname', 'studentEmail', 'studentPhoneNum', 'studentAge', 'studentResidPrefer', 'studentRoomPref', 'studentRoommatePref')
+print(test.getStudentRoommatePref())
+
+def studentLogIn():
+  # check if data exists and password/username are matching
+  return True
+
+def adminLogIn():
+  # just check with admin, if data exists and password/username are matching
+  return True
+
+def newStudentAccount():
+  # gather info here
 
 def MainScreen():
   mainScreenInput = input('Enter 1 to log in as student, 2 to log in as admin, 3 to create a new account.')
