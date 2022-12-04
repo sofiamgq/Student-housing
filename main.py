@@ -83,10 +83,11 @@ def MainScreen():
   mainScreenInput = input('Enter 1 to log in as student, 2 to log in as admin, 3 to create a new account.')
   if mainScreenInput == '1':
     studentLogIn()
-  if mainScreenInput == 2:
-    adminLogIn()
-  if mainScreenInput == 3:
-    newStudentAccount()
+  elif mainScreenInput == '2':
+    studentSignUp()
+  elif mainScreenInput == '3':
+    facultyLogIn()
+  elif mainScreenInput=='4'
   else:
     print('value error. put this statement in a loop and restart')
   
