@@ -79,15 +79,19 @@ def adminLogIn():
 def newStudentAccount():
   # gather info here
 
-def MainScreen():
-  mainScreenInput = input('Enter 1 to log in as student, 2 to log in as admin, 3 to create a new account.')
+def mainScreen():
+  print('Welcome to the Student Housing Management System!')
+  print('Enter 1 to log in as student, enter 2 to sign up, enter 3 to log in as a faculty member, enter 4 to log out.')
+  mainScreenInput = input('Your answer: ')
   if mainScreenInput == '1':
     studentLogIn()
   elif mainScreenInput == '2':
     studentSignUp()
   elif mainScreenInput == '3':
     facultyLogIn()
-  elif mainScreenInput=='4'
+  elif mainScreenInput=='4':
+    logOut()
   else:
-    print('value error. put this statement in a loop and restart')
+    print('Please enter a valid input and try again.')
+    mainScreen()
   
