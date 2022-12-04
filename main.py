@@ -2,12 +2,40 @@
 
 from replit import db
 # main screen. displays options: log in student, log in admin, create account student
-class Student:
-  def __init__(self, name, password, dormpref, smoker):
-    self.name = name
-    self.password = password
-    self.dormpref = dormpref
-    self.smoker = smoker
+class User:
+  def __init__(self, userLogin, userPassword, userName, userSurname):
+    self.__userLogin = userLogin
+    self.__userPassword = userPassword
+    self.__userName = userName
+    self.__userSurname = userSurname
+
+  def getFullName(self):
+    return self.__userName + ' ' + self.__userSurname
+
+class Student(User):
+  def __init__(self, userLogin, userPassword, userName, userSurname, studentEmail, studentPhoneNum, studentAge, studentResidPrefer, studentRoomPref):
+    User.__init__(self, userLogin, userPassword, userName, userSurname)
+    self.__studentEmail = studentEmail
+    self.__studentPhoneNum = studentPhoneNum
+    self.__studentAge = studentAge
+    self.__studentResidPrefer = studentResidPrefer
+    self.__studentRoomPref = studentRoomPref
+
+  def getPhoneNum(self):
+    return self.__studentPhoneNum
+
+  def getEmail(self):
+    return self.__studentEmail
+
+  def modifyApplication(self):
+    return True
+
+  def 
+
+
+
+
+    
 
   def updateDormPref(self, newdormpref):
     return True
