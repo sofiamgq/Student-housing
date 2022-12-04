@@ -81,7 +81,7 @@ def newStudentAccount():
 
 def MainScreen():
   mainScreenInput = input('Enter 1 to log in as student, 2 to log in as admin, 3 to create a new account.')
-  if mainScreenInput == 1:
+  if mainScreenInput == '1':
     studentLogIn()
   if mainScreenInput == 2:
     adminLogIn()
