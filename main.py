@@ -11,13 +11,13 @@ class User:
     return self.__userName + ' ' + self.__userSurname
 
 class Student(User):
-  def __init__(self, userLogin, userPassword, userName, userSurname, studentEmail, studentPhoneNum, studentAge, studentResidPrefer, studentRoomPref):
-    User.__init__(self, userLogin, userPassword, userName, userSurname)
-    self.__studentEmail = studentEmail
-    self.__studentPhoneNum = studentPhoneNum
-    self.__studentAge = studentAge
-    self.__studentResidPrefer = studentResidPrefer
-    self.__studentRoomPref = studentRoomPref
+  def __init__(self, userLogin, userPassword, userName, userSurname):
+    super().__init__(userLogin, userPassword, userName, userSurname)
+    self.__studentEmail = None
+    self.__studentPhoneNum = None
+    self.__studentAge = None
+    self.__studentResidPrefer = None
+    self.__studentRoomPref = None
 
   def getPhoneNum(self):
     return self.__studentPhoneNum
@@ -33,7 +33,7 @@ class Student(User):
 
   class Faculty(User):
     def __init__(self, userLogin, userPassword, userName, userSurname):
-      User.__init__(self, userLogin, userPassword, userName, userSurname)
+      super().__init__(userLogin, userPassword, userName, userSurname)
 
   def showAllStudentNames(self):
     return True
@@ -51,9 +51,9 @@ class Student(User):
     return True
 
 class UpperClassStudent(Student):
-  def __init__(self, userLogin, userPassword, userName, userSurname, studentEmail, studentPhoneNum, studentAge, studentResidPrefer, studentRoomPref, studentRoommatePref):
-    Student.__init__(self, userLogin, userPassword, userName, userSurname, studentEmail, studentPhoneNum, studentAge, studentResidPrefer, studentRoomPref)
-    self.__studentRoommatePref = studentRoommatePref
+  def __init__(self, userLogin, userPassword, userName, userSurname):
+    super().__init__(userLogin, userPassword, userName, userSurname)
+    self.__studentRoommatePref = None
 
   def getStudentRoommatePref(self):
     return self.__studentRoommatePref
