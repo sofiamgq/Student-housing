@@ -1,7 +1,5 @@
 # coded some rough class stuff, mostly just thought we should get something down in replit. feel free to edit
-
 from replit import db
-# main screen. displays options: log in student, log in admin, create account student
 class User:
   def __init__(self, userLogin, userPassword, userName, userSurname):
     self.__userLogin = userLogin
@@ -30,39 +28,42 @@ class Student(User):
   def modifyApplication(self):
     return True
 
-  def 
+  def getRoomPref(self):
+    return self.__studentRoomPref
 
+  class Faculty(User):
+    def __init__(self, userLogin, userPassword, userName, userSurname):
+      User.__init__(self, userLogin, userPassword, userName, userSurname)
 
-
-
-    
-
-  def updateDormPref(self, newdormpref):
+  def showAllStudentNames(self):
     return True
 
-  def updateIsSmoker(self, bool):
+  def showSpecificStudentInfo(self, userName)
+# We should have a user ID system implmented, rather than looking up students by first and last name. This will stop the issue of having duplicate students with the same name. If there is a duplicate, this function should present faculty with the option to pick which student they mean (for example, by also displaying birthdate or another identifying piece of info)
     return True
 
-  def returnIsSmoker(self):
-    return self.IsSmoker
+  def addNewFacultyMember():
+    # init new instance of faculty class
+    return True
 
-  def returnDormPref(self):
-    return self.DormPref
+  def createHousingPlan():
+    # run through some algorithm to find and return the ideal housing plan
+    return True
 
-class Admin:
-  def __init__(self, name, password):
-    self.name = name
-    self.password = password
+class UpperClassStudent(Student):
+  def __init__(self, userLogin, userPassword, userName, userSurname, studentEmail, studentPhoneNum, studentAge, studentResidPrefer, studentRoomPref, studentRoommatePref):
+    Student.__init__(self, userLogin, userPassword, userName, userSurname, studentEmail, studentPhoneNum, studentAge, studentResidPrefer, studentRoomPref)
+    self.__studentRoommatePref = studentRoommatePref
+
+  def getStudentRoommatePref(self):
+    return self.__studentRoommatePref
+
+  def updateStudentRoommatePref(self, newPref):
+    self.__studentRoommatePref = newPref
 
 
-def studentLogIn():
-  return True
 
-def adminLogIn():
-  return True
 
-def newStudentAccount():
-  return True
 
 
 def MainScreen():
@@ -76,15 +77,3 @@ def MainScreen():
   else:
     print('value error. put this statement in a loop and restart')
   
-
-    
-# create account student:
-  # application asks for an account name, asks for a password, checks in database if the account exists previously. If not, student account is created.
-
-# from student account:
-  # program displays options to update housing preferences. This means, for every value saved in the student class (init as null), can access and edit. Additionally, maybe an option to 'complete housing survey' and the program will automatically guide the student through updating all pieces of data in their instance of the student class.
-
-# From admin account:
-  # can view any data, compile reports on overall dataset. Has an option to generate housing preferences, which will run all existing student classes through some sort of algorithm and return housing assignments
-
-
