@@ -124,6 +124,22 @@ def facultyLogIn():
     print('Incorrect password.')
     return False
 
+def studentLogIn():
+  username = input('What is your username: ')
+  for student in db['students']:
+    if student.getUserName() == username:
+      continue
+    else:
+      print('This username does not exist.')
+      return False
+      password = input('Enter password: ')
+  if db['students'].getPassword() == password:
+    print('Login successful.')
+    return True
+  else:
+    print('Incorrect password.')
+    return False
+
 def adminLogIn():
   print ('Welcome to the faculty log in portal!')
   username=input('Please enter your username: ')
