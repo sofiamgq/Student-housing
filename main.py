@@ -46,9 +46,9 @@ class Student(User):
   def setRoomPrefer(self, roomPrefer):
     self.__studentRoomPref = roomPrefer
 
-  class Faculty(User):
-    def __init__(self, userLogin, userPassword, userName, userSurname):
-      super().__init__(userLogin, userPassword, userName, userSurname)
+class Faculty(User):
+  def __init__(self, userLogin, userPassword, userName, userSurname):
+    super().__init__(userLogin, userPassword, userName, userSurname)
 
   def showAllStudentNames(self):
     return True
@@ -57,13 +57,38 @@ class Student(User):
 # We should have a user ID system implmented, rather than looking up students by first and last name. This will stop the issue of having duplicate students with the same name. If there is a duplicate, this function should present faculty with the option to pick which student they mean (for example, by also displaying birthdate or another identifying piece of info)
     return True
 
-  def addNewFacultyMember():
-    # init new instance of faculty class
-    return True
+  
+
 
   def createHousingPlan():
     # run through some algorithm to find and return the ideal housing plan
     return True
+    
+def addNewFacultyMember():
+  if not('faculty' in db.keys()):
+    db['facylty'] = []
+  login = input('Choose your login: ')
+  indicator = False
+  while indicator == False:
+    flag = True
+    for user in db['faculty']:
+      if user.__userLogin == login:
+        flag = False
+    if flag == False:
+      print('Such login already exsists.')
+      login = input('Choose your login: ')
+    else:
+      indicator = True
+  password = input('Choose your password: ')
+  verification = input('Repeat your password: ')
+  while password != verification:
+    print('The passwords do not match. Try again.')
+    password = input('Choose your password: ')
+    verification = input('Repeat your password: ')
+  facultyName = input('Enter your name: ')
+  facultySurname = input('Enter your surname: ')
+  newFaculty = Faculty(login, password, facultyName, facultySurname)
+  db['faculty'].add(newFaculty)
 
 class UpperClassStudent(Student):
   def __init__(self, userLogin, userPassword, userName, userSurname):
@@ -92,6 +117,8 @@ def adminLogIn():
   return True
 
 def newStudentAccount():
+  if not('students' in db.keys()):
+    db['students'] = []
   login = input('Choose your login: ')
   indicator = False
   while indicator == False:
@@ -113,8 +140,6 @@ def newStudentAccount():
   studentName = input('Enter your name: ')
   studentSurname = input('Enter your surname: ')
   newStudent = Student(login, password, studentName, studentSurname)
-  if not('students' in db.keys()):
-    db['students'] = []
   db['students'].add(newStudent)
   return newStudent
 
