@@ -87,9 +87,24 @@ def studentLogIn():
   # check if data exists and password/username are matching
   return True
 
-def adminLogIn():
+def facultyLogIn():
+  print ('Welcome to the faculty log in portal!')
+  username=input('Please enter your username: ')
+  if username in db:
+    password=input('Please enter your password: ')
+    if db[username]==password:
+      'Welcome!'
+    else:
+      print('Please try again.')
+      facultyLogIn()
+  else:
+    print('Please try again.')
+    facultyLogIn()
   # just check with admin, if data exists and password/username are matching
-  return True
+
+def logOut():
+  print('You have successfully logged out')
+  mainScreen()
 
 def newStudentAccount():
   login = input('Choose your login: ')
