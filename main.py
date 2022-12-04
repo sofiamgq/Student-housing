@@ -31,6 +31,21 @@ class Student(User):
   def getRoomPref(self):
     return self.__studentRoomPref
 
+  def setStudentEmail(self, email):
+    self.__studentEmail = email
+
+  def setStudentPhoneNum(self, phoneNum):
+    self.__studentPhoneNum = phoneNum
+
+  def setStudentAge(self, age):
+    self.__studentAge = age
+
+  def setStudentResidPrefer(self, residPrefer):
+    self.__studentResidPrefer = residPrefer
+
+  def setRoomPrefer(self, roomPrefer):
+    self.__studentRoomPref = roomPrefer
+
   class Faculty(User):
     def __init__(self, userLogin, userPassword, userName, userSurname):
       super().__init__(userLogin, userPassword, userName, userSurname)
