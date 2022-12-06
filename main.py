@@ -66,7 +66,7 @@ class Faculty(User):
     
 def addNewFacultyMember():
   if not('faculty' in db.keys()):
-    db['facylty'] = []
+    db['faculty'] = []
   login = input('Choose your login: ')
   indicator = False
   while indicator == False:
@@ -193,7 +193,7 @@ def mainScreen():
   if mainScreenInput == '1':
     studentLogIn()
   elif mainScreenInput == '2':
-    studentSignUp()
+    newStudentAccount()
   elif mainScreenInput == '3':
     facultyLogIn()
   elif mainScreenInput=='4':
