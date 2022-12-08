@@ -16,8 +16,12 @@ class Student(User):
     self.__studentEmail = None
     self.__studentPhoneNum = None
     self.__studentAge = None
+    self.__studentYearOfEdu= None
     self.__studentResidPrefer = None
     self.__studentRoomPref = None
+    self.__studentSpecMedCond= None
+    self.__studentResidPrefer= None
+    self.__studentRoomPrefer= None
 
   def getPhoneNum(self):
     return self.__studentPhoneNum
@@ -63,6 +67,22 @@ class Student(User):
 
   def setRoomPrefer(self, roomPrefer):
     self.__studentRoomPref = roomPrefer
+  
+  def housingApplication(self):
+    answerEmail=input('Please enter your email: ')
+    self.__studentEmail = answerEmail
+    answerPhone=input('Please enter your phone number: ')
+    self.__studentPhoneNum = answerPhone
+    answerAge= input('Please enter your age: ')
+    self.__studentAge = answerAge
+    answerYearOfEdu= input('Please enter your year of education: ')
+    self.__studentYearOfEdu=answerYearOfEdu
+    answerMedicalConditions= input('Please enter if you have any medical conditions: ')
+    self.__studentSpecMedCond=answerMedicalConditions
+    answerResidencePreference=input('Please tell us if you have any residence preference: ')
+    self.__studentResidPrefer= answerResidencePreference
+    answerRoomPreference= input('Please tell us if you have any room preference: ')
+    self.__studentRoomPrefer=answerRoomPreference 
 
 class Faculty(User):
   def __init__(self, userLogin, userPassword, userName, userSurname):
@@ -76,7 +96,6 @@ class Faculty(User):
 # We should have a user ID system implmented, rather than looking up students by first and last name. This will stop the issue of having duplicate students with the same name. If there is a duplicate, this function should present faculty with the option to pick which student they mean (for example, by also displaying birthdate or another identifying piece of info)
     return True
 
-  
 
 
   def createHousingPlan():
@@ -126,6 +145,7 @@ class UpperClassStudent(Student):
 
 test = UpperClassStudent('userLogin', 'userPassword', 'userName', 'userSurname', 'studentEmail', 'studentPhoneNum', 'studentAge', 'studentResidPrefer', 'studentRoomPref', 'studentRoommatePref')
 print(test.getStudentRoommatePref())
+
 
 def facultyLogIn():
   username = input('What is your username: ')
@@ -204,6 +224,7 @@ def newStudentAccount():
   newStudent = Student(login, password, studentName, studentSurname)
   db['students'].add(newStudent)
   return newStudent
+
 
 def mainScreen():
   print('Welcome to the Student Housing Management System!')
