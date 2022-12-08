@@ -1,5 +1,9 @@
 # coded some rough class stuff, mostly just thought we should get something down in replit. feel free to edit
 from replit import db
+
+db = {}
+db['countVarStudent'] = 1
+db['countVarFaculty'] = 1
 class User:
   def __init__(self, userLogin, userPassword, userName, userSurname):
     self.__userLogin = userLogin
@@ -73,7 +77,7 @@ class Student(User):
     answerEmail=input('Please enter your email: ')
     if ' ' not in answerEmail and "@" in answerEmail:
       answerEmailVer= True
-    while answerEmailVer= False:
+    while answerEmailVer== False:
       print ('Please enter a valid email.')
       answerEmail=input('Please enter your email: ')    
     if answerEmailVer== True:
@@ -104,7 +108,7 @@ class Student(User):
       answerYearOfEduVer=True
     while answerYearOfEduVer==False:
       print('Your answer must contain 4 digits.')
-       answerYearOfEdu= input('Please enter your year of education: ')
+      answerYearOfEdu = input('Please enter your year of education: ')
     if answerYearOfEduVer==True:
       self.__studentYearOfEdu=answerYearOfEdu
     answerMedicalConditions= input('Please enter if you have any medical conditions: ')
@@ -169,12 +173,6 @@ class UpperClassStudent(Student):
   def updateStudentRoommatePref(self, newPref):
     self.__studentRoommatePref = newPref
 
-
-
-
-
-test = UpperClassStudent('userLogin', 'userPassword', 'userName', 'userSurname', 'studentEmail', 'studentPhoneNum', 'studentAge', 'studentResidPrefer', 'studentRoomPref', 'studentRoommatePref')
-print(test.getStudentRoommatePref())
 
 
 def facultyLogIn():
@@ -271,4 +269,18 @@ def mainScreen():
   else:
     print('Please enter a valid input and try again.')
     mainScreen()
-  
+
+
+def displayAllStudents():
+  for item in db.keys():
+    if 'student' in item:
+      print(db[item].getFullName())
+
+# this is a model for how we will have student keys
+James = UpperClassStudent('userLogin', 'userPassword', 'userName', 'userSurname')
+db['student' + str(db['countVarStudent'])] = James
+print(db['student1'].getFullName())
+
+displayAllStudents()
+
+
