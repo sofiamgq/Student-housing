@@ -69,14 +69,44 @@ class Student(User):
     self.__studentRoomPref = roomPrefer
   
   def housingApplication(self):
+    answerEmailVer= False
     answerEmail=input('Please enter your email: ')
-    self.__studentEmail = answerEmail
+    if ' ' not in answerEmail and "@" in answerEmail:
+      answerEmailVer= True
+    while answerEmailVer= False:
+      print ('Please enter a valid email.')
+      answerEmail=input('Please enter your email: ')    
+    if answerEmailVer== True:
+      self.__studentEmail = answerEmail
     answerPhone=input('Please enter your phone number: ')
-    self.__studentPhoneNum = answerPhone
+    answerPhoneVer= False
+    if len(answerPhone)==10 and type(int(answerPhone))==int:
+       answerPhoneVer= True
+    while answerPhoneVer== False:
+      print('Your phone number must have 10 numbers and must only contain numbers.')
+      answerPhone=input('Please enter your phone number: ')
+    if answerPhoneVer==True:
+      self.__studentPhoneNum = answerPhone
+
+    answerAgeVer=False
     answerAge= input('Please enter your age: ')
-    self.__studentAge = answerAge
+    if int(answerAge)>=18:
+      answerAgeVer=True
+    while answerAgeVer==False:
+      print('You must be at least 18 years old')
+      answerAge= input('Please enter your age: ')
+    if answerAgeVer==True:
+      self.__studentAge = answerAge
+
+    answerYearOfEdu=False
     answerYearOfEdu= input('Please enter your year of education: ')
-    self.__studentYearOfEdu=answerYearOfEdu
+    if len(answerYearOfEdu)==4 and type(int(answerYearOfEdu))==int:
+      answerYearOfEduVer=True
+    while answerYearOfEduVer==False:
+      print('Your answer must contain 4 digits.')
+       answerYearOfEdu= input('Please enter your year of education: ')
+    if answerYearOfEduVer==True:
+      self.__studentYearOfEdu=answerYearOfEdu
     answerMedicalConditions= input('Please enter if you have any medical conditions: ')
     self.__studentSpecMedCond=answerMedicalConditions
     answerResidencePreference=input('Please tell us if you have any residence preference: ')
