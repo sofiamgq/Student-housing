@@ -193,6 +193,7 @@ def facultyLogIn():
 
 def studentLogIn():
   username = input('What is your username: ')
+  
   for student in db['students']:
     if student.getUserName() == username:
       continue
@@ -250,18 +251,18 @@ def newStudentAccount():
   studentName = input('Enter your name: ')
   studentSurname = input('Enter your surname: ')
   newStudent = Student(login, password, studentName, studentSurname)
-  db['students'].add(newStudent)
+  db['student' + str(db['countVarStudent'])] = newStudent
   return newStudent
 
 
 def mainScreen():
   print('Welcome to the Student Housing Management System!')
-  print('Enter 1 to log in as student, enter 2 to sign up, enter 3 to log in as a faculty member, enter 4 to log out.')
+  print('Enter 1 to create a new account, enter 2 to log in as a student, enter 3 to log in as a faculty member, enter 4 to log out.')
   mainScreenInput = input('Your answer: ')
   if mainScreenInput == '1':
-    studentLogIn()
-  elif mainScreenInput == '2':
     newStudentAccount()
+  elif mainScreenInput == '2':
+    studentLogIn()
   elif mainScreenInput == '3':
     facultyLogIn()
   elif mainScreenInput=='4':
@@ -282,5 +283,7 @@ db['student' + str(db['countVarStudent'])] = James
 print(db['student1'].getFullName())
 
 displayAllStudents()
+print()
+mainScreen()
 
 
