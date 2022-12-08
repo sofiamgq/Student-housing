@@ -25,11 +25,29 @@ class Student(User):
   def getEmail(self):
     return self.__studentEmail
 
-  def modifyApplication(self):
-    return True
+  def getAge(self):
+    return self.__studentAge
+
+  def getYearOfEdu():
+    return self.__studentYearOfEdu
+
+  def getSpecMedCond():
+    return self.__studentSpecMedCond
+
+  def getStudentResidPrefer():
+    return self.__studentResidPrefer
 
   def getRoomPref(self):
     return self.__studentRoomPref
+
+  def modifyApplication(self):
+    return True
+
+  def submitNewApplication(self):
+    return True
+
+  def showRoomInfo (self):
+    return True
 
   def setStudentEmail(self, email):
     self.__studentEmail = email
