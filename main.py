@@ -51,7 +51,6 @@ class Faculty(User):
     super().__init__(userLogin, userPassword, userName, userSurname)
 
   def showAllStudentNames(self):
-    names = []
     for student in db.keys():
       return student
     
