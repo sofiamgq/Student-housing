@@ -51,8 +51,10 @@ class Faculty(User):
     super().__init__(userLogin, userPassword, userName, userSurname)
 
   def showAllStudentNames(self):
-    return True
-
+    names = []
+    for student in db.keys():
+      return student
+    
   def showSpecificStudentInfo(self, userName):
 # We should have a user ID system implmented, rather than looking up students by first and last name. This will stop the issue of having duplicate students with the same name. If there is a duplicate, this function should present faculty with the option to pick which student they mean (for example, by also displaying birthdate or another identifying piece of info)
     return True
