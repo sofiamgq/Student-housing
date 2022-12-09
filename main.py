@@ -1,4 +1,7 @@
 from replit import db
+import os
+os.system("pip install pwinput")
+import pwinput
 
 def initializeStudent(studentLogin, studentPassword, studentName, studentSurname, studentID):
   """This is the init function, which starts the class. It also contains the main data that the objects in the class will require, such as student email and age."""
@@ -143,12 +146,12 @@ def newStudentAccount():
       login = input('Choose your login: ')
     else:
       indicator = True
-  password = input('Choose your password: ')
-  verification = input('Repeat your password: ')
+    password = pwinput.pwinput(prompt='Enter your password: ', mask='*')
+  verification =  pwinput.pwinput(prompt='Repeat your password: ', mask='*')
   while password != verification:
     print('The passwords do not match. Try again.')
-    password = input('Choose your password: ')
-    verification = input('Repeat your password: ')
+    password = pwinput.pwinput(prompt='Enter your password: ', mask='*')
+    verification =  pwinput.pwinput(prompt='Repeat your password: ', mask='*')
   studentName = input('Enter your name: ')
   studentSurname = input('Enter your surname: ')
   studentID = 'Student' + str(db['NumOfStud'] + 1)
@@ -172,10 +175,10 @@ def studentLogIn():
     if flag == False:
       print('There is no user with such login.')
       login = input('Enter your login: ')
-  password = input('Enter your password: ')
+  password =  pwinput.pwinput(prompt='Enter your password: ', mask='*')
   while password != db[currentUser]['studentPassword']:
     print('The password is incorrect. Try again.')
-    password = input('Enter your password: ')
+    password =  pwinput.pwinput(prompt='Enter your password: ', mask='*')
   print('Welcome, ' + studentFullName(currentUser) + '!')
   return currentUser
 
@@ -193,10 +196,10 @@ def facultyLogIn():
     if flag == False:
       print('There is no user with such login.')
       login = input('Enter your login: ')
-  password = input('Enter your password: ')
+  password =  pwinput.pwinput(prompt='Enter your password: ', mask='*')
   while password != db[currentUser]['facultyPassword']:
     print('The password is incorrect. Try again.')
-    password = input('Enter your password: ')
+    password =  pwinput.pwinput(prompt='Enter your password: ', mask='*')
   print('Welcome, ' + facultyFullName(currentUser) + '!')
   return currentUser
 
@@ -346,12 +349,12 @@ def addNewFaculty(currentUser):
       login = input('Choose a login: ')
     else:
       indicator = True
-  password = input('Choose a password: ')
+  password =  pwinput.pwinput(prompt='Enter your password: ', mask='*')
   verification = input('Repeat a password: ')
   while password != verification:
     print('The passwords do not match. Try again.')
-    password = input('Choose a password: ')
-    verification = input('Repeat a password: ')
+    password =  pwinput.pwinput(prompt='Enter your password: ', mask='*')
+    verification =  pwinput.pwinput(prompt='Re-enter your password: ', mask='*')
   facultyName = input('Enter new faculty member\'s name: ')
   facultySurname = input('Enter new faculty member\'s surname: ')
   facultyID = 'Faculty' + str(db['NumOfFac'] + 1)
@@ -360,6 +363,25 @@ def addNewFaculty(currentUser):
   print('A new faculty member, ' + facultyFullName(facultyID) + ', was successfully added to the system.')
   facultyPage(currentUser)
 
+def condPassword(password):
+  number= False
+  characters= False
+  uppercase= False
+  specialCharacter= False 
+  chars = '!”#$%&()*+,-./:;<=>?@[\]^_`{|}~'
+  for i in password:
+    if i.isdigit():
+      number=True
+    if i.isupper():
+      uppercase=True
+    if i in chars:
+      specialCharacter=True
+  if len(password)>=8:
+    characters=True
+  if number and characters and uppercase and specialCharacter:
+    return True
+  else:
+    return False
 def facultyPage(currentUser):
   """This function is the faculty portal, and it asks the user what they want to do such as managing students or adding nee facukty members."""
   print('Enter 1 to access student information\nEnter 2 to add a new faculty member\nEnter 3 to get a housing plan\nEnter 4 to log out')
