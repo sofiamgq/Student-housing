@@ -176,7 +176,7 @@ def newStudentAccount():
         password = pwinput.pwinput(prompt='Enter your password: ', mask='*')
         verification =  pwinput.pwinput(prompt='Repeat your password: ', mask='*')
     else:
-      print ('Your password does not fulfill the requierements. Please try again.')
+      print ('Your password does not fulfill the requirements. Please try again.')
       newStudentAccount()
   studentName = input('Enter your name: ')
   studentSurname = input('Enter your surname: ')
@@ -375,12 +375,19 @@ def addNewFaculty(currentUser):
       login = input('Choose a login: ')
     else:
       indicator = True
-  password =  pwinput.pwinput(prompt='Enter your password: ', mask='*')
-  verification = input('Repeat a password: ')
-  while password != verification:
-    print('The passwords do not match. Try again.')
-    password =  pwinput.pwinput(prompt='Enter your password: ', mask='*')
-    verification =  pwinput.pwinput(prompt='Re-enter your password: ', mask='*')
+  print ('Your password MUST cobtain at least 8 characters, 1 uppercase letter, 1 number and 1 special character')
+  password = pwinput.pwinput(prompt='Enter your password: ', mask='*')
+  #print ('here')
+  if condPassword(password):
+    #print ('got here')
+    verification =  pwinput.pwinput(prompt='Repeat your password: ', mask='*')
+    while password != verification:
+      print('The passwords do not match. Try again.')
+      password = pwinput.pwinput(prompt='Enter your password: ', mask='*')
+      verification =  pwinput.pwinput(prompt='Repeat your password: ', mask='*')
+  else:
+    print ('Your password does not fulfill the requirements. Please try again.')
+    addNewFaculty(currentUser)
   facultyName = input('Enter new faculty member\'s name: ')
   facultySurname = input('Enter new faculty member\'s surname: ')
   facultyID = 'Faculty' + str(db['NumOfFac'] + 1)
