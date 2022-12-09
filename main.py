@@ -121,7 +121,7 @@ def newStudentAccount():
     flag = True
     for elem in db.keys():
       if 'Student' in elem:
-        if db[elem]['StudentLogIn'] == login:
+        if db[elem]['studentLogin'] == login:
           flag = False
           break
     if flag == False:
@@ -267,12 +267,78 @@ def studentPage(currentUser):
   elif studentPageInput == '2':
     viewHousingApplication(currentUser)
   elif studentPageInput == '3':
-    pass
+    print('Available residence halls:\n- Residence Hall A\n- Residence Hall B\nAvailable Rooms:\n- A double room for 2 people\n- A single room for 1 person')
   elif studentPageInput == '4':
     logout()
 
+def accesStudentInfo(currentUser):
+  print('Enter 1 if you want to access the list of all the students and their student IDs\nEnter 2 if you want to access information about a specific student')
+  ans = input('Your answer: ')
+  while not(ans in ['1', '2']):
+    print('Please input a valid answer.')
+    ans = input('Your answer: ')
+  if ans == '1':
+    studentList = getAllStudents()
+    for elem in studentList:
+      print(elem[0], '-', elem[1])
+  elif ans == '2':
+    studentList = getAllStudents()
+    student = input('Enter student\'s ID: ')
+    flag = False
+    while flag == False:
+      for elem in studentList:
+        if elem[0] == student:
+          flag == True
+          print(viewHousingApplication(student))
+          break
+      if flag == False:
+        print('Please input a valid student ID.')
+        student = input('Enter student\'s ID: ')
+  facultyPage(currentUser)
+
+def addNewFaculty(currentUser):
+  login = input('Choose a login: ')
+  indicator = False
+  while indicator == False:
+    flag = True
+    for elem in db.keys():
+      if 'Faculty' in elem:
+        if db[elem]['facultyLogin'] == login:
+          flag = False
+          break
+    if flag == False:
+      print('Such login already exsists.')
+      login = input('Choose a login: ')
+    else:
+      indicator = True
+  password = input('Choose a password: ')
+  verification = input('Repeat a password: ')
+  while password != verification:
+    print('The passwords do not match. Try again.')
+    password = input('Choose a password: ')
+    verification = input('Repeat a password: ')
+  facultyName = input('Enter new faculty member\'s name: ')
+  facultySurname = input('Enter new faculty member\'s surname: ')
+  facultyID = 'Faculty' + str(db['NumOfFac'] + 1)
+  initializeFaculty(login, password, facultyName, facultySurname, facultyID)
+  db['NumOfFac'] += 1
+  print('A new faculty member, ' + facultyFullName(facultyID) + ', was successfully added to the system.')
+facultyPage(currentUser)
+
 def facultyPage(currentUser):
-  pass
+  print('Enter 1 to access student information\nEnter 2 to add a new faculty member\nEnter 3 to get a housing plan\nEnter 4 to log out')
+  facultyPageInput = input('Your answer: ')
+  while not(facultyPageInput in ['1', '2', '3', '4']):
+    print('Please enter a valid input.')
+    facultyPageInput = input('Your answer: ')
+  if facultyPageInput == '1':
+    accessStudentInfo()
+  elif facultyPageInput == '2':
+    addNewFaculty()
+  elif facultyPageInput == '3':
+    pass
+  elif facultyPageInput == '4':
+    logout()
 
 def mainscreen():
   print('Welcome to the Student Housing Management System!')
@@ -300,11 +366,9 @@ def preparations():
         db['NumOfStud'] += 1
       elif 'Faculty' in elem:
         db['NumOfFac'] += 1
-
-
-if db['NumOfFac'] == 0:
-  initializeFaculty('FirstAdmin', 'Qwerty123', 'First', 'Administrator', 'Faculty1')
-  db['NumOfFac'] += 1
+  if db['NumOfFac'] == 0:
+    initializeFaculty('FirstAdmin', 'Qwerty123', 'First', 'Administrator', 'Faculty1')
+    db['NumOfFac'] += 1
 
 db.clear()
 preparations()
