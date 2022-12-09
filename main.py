@@ -294,7 +294,7 @@ def studentPage(currentUser):
   elif studentPageInput == '4':
     logout()
 
-def accesStudentInfo(currentUser):
+def accessStudentInfo(currentUser):
   """This function allows faculty members to see a list of all the students. It also allows them to view specific information about a student if they enter their student ID."""
   print('Enter 1 if you want to access the list of all the students and their student IDs\nEnter 2 if you want to access information about a specific student')
   ans = input('Your answer: ')
@@ -348,7 +348,7 @@ def addNewFaculty(currentUser):
   initializeFaculty(login, password, facultyName, facultySurname, facultyID)
   db['NumOfFac'] += 1
   print('A new faculty member, ' + facultyFullName(facultyID) + ', was successfully added to the system.')
-facultyPage(currentUser)
+  facultyPage(currentUser)
 
 def facultyPage(currentUser):
   """This function is the faculty portal, and it asks the user what they want to do such as managing students or adding nee facukty members."""
