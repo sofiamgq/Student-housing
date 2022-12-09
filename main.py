@@ -128,10 +128,6 @@ class Student(User):
 class Faculty(User):
   def __init__(self, userLogin, userPassword, userName, userSurname):
     super().__init__(userLogin, userPassword, userName, userSurname)
-
-  def showAllStudentNames(self):
-    for student in db.keys():
-      return student
     
   def showSpecificStudentInfo(self, userName):
 # We should have a user ID system implmented, rather than looking up students by first and last name. This will stop the issue of having duplicate students with the same name. If there is a duplicate, this function should present faculty with the option to pick which student they mean (for example, by also displaying birthdate or another identifying piece of info)
@@ -182,21 +178,7 @@ class UpperClassStudent(Student):
 
 
 
-def facultyLogIn():
-  username = input('What is your username: ')
-  for faculty in db['faculty']:
-    if faculty.getUserLogin() == username:
-      continue
-    else:
-      print('This username does not exist.')
-      return False
-      password = input('Enter password: ')
-  if db['faculty'].getPassword() == password:
-    print('Login successful.')
-    return True
-  else:
-    print('Incorrect password.')
-    return False
+
 
 def studentLogIn():
   username = input('What is your username: ')
@@ -216,6 +198,21 @@ def studentLogIn():
   else:
     print('Incorrect password.')
     return False
+
+def facultyLogIn():
+  print ('Welcome to the faculty log in portal!')
+  username=input('Please enter your username: ')
+  for instance in db[db.keys()]:
+    if instance.getUserLogin() == username:
+      password=input('Please enter your password: ')
+      if instance.getPassword() == password:
+        'Welcome!'
+      else:
+        print('Please try again.')
+        facultyLogIn()
+    else:
+      print('Please try again.')
+      facultyLogIn()
 
 def adminLogIn():
   print ('Welcome to the faculty log in portal!')
