@@ -3,6 +3,25 @@ import os
 os.system("pip install pwinput")
 import pwinput
 
+def condPassword(password):
+  number= False
+  characters= False
+  uppercase= False
+  specialCharacter= False 
+  chars = '!”#$%&()*+,-./:;<=>?@[\]^_`{|}~'
+  for i in password:
+    if i.isdigit():
+      number=True
+    if i.isupper():
+      uppercase=True
+    if i in chars:
+      specialCharacter=True
+  if len(password)>=8:
+    characters=True
+  if number and characters and uppercase and specialCharacter:
+    return True
+  else:
+    return False
 def initializeStudent(studentLogin, studentPassword, studentName, studentSurname, studentID):
   """This is the init function, which starts the class. It also contains the main data that the objects in the class will require, such as student email and age."""
   db[studentID] = dict()
@@ -146,12 +165,19 @@ def newStudentAccount():
       login = input('Choose your login: ')
     else:
       indicator = True
+    print ('Your password MUST cobtain at least 8 characters, 1 uppercase letter, 1 number and 1 special character')
     password = pwinput.pwinput(prompt='Enter your password: ', mask='*')
-  verification =  pwinput.pwinput(prompt='Repeat your password: ', mask='*')
-  while password != verification:
-    print('The passwords do not match. Try again.')
-    password = pwinput.pwinput(prompt='Enter your password: ', mask='*')
-    verification =  pwinput.pwinput(prompt='Repeat your password: ', mask='*')
+    #print ('here')
+    if condPassword(password):
+      #print ('got here')
+      verification =  pwinput.pwinput(prompt='Repeat your password: ', mask='*')
+      while password != verification:
+        print('The passwords do not match. Try again.')
+        password = pwinput.pwinput(prompt='Enter your password: ', mask='*')
+        verification =  pwinput.pwinput(prompt='Repeat your password: ', mask='*')
+    else:
+      print ('Your password does not fulfill the requierements. Please try again.')
+      newStudentAccount()
   studentName = input('Enter your name: ')
   studentSurname = input('Enter your surname: ')
   studentID = 'Student' + str(db['NumOfStud'] + 1)
@@ -363,25 +389,7 @@ def addNewFaculty(currentUser):
   print('A new faculty member, ' + facultyFullName(facultyID) + ', was successfully added to the system.')
   facultyPage(currentUser)
 
-def condPassword(password):
-  number= False
-  characters= False
-  uppercase= False
-  specialCharacter= False 
-  chars = '!”#$%&()*+,-./:;<=>?@[\]^_`{|}~'
-  for i in password:
-    if i.isdigit():
-      number=True
-    if i.isupper():
-      uppercase=True
-    if i in chars:
-      specialCharacter=True
-  if len(password)>=8:
-    characters=True
-  if number and characters and uppercase and specialCharacter:
-    return True
-  else:
-    return False
+
 def facultyPage(currentUser):
   """This function is the faculty portal, and it asks the user what they want to do such as managing students or adding nee facukty members."""
   print('Enter 1 to access student information\nEnter 2 to add a new faculty member\nEnter 3 to get a housing plan\nEnter 4 to log out')
