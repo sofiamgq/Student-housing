@@ -1,10 +1,14 @@
 # coded some rough class stuff, mostly just thought we should get something down in replit. feel free to edit
 from replit import db
 
+db['StudentCount'] = 0
+db['FacultyCount'] = 0
 
-db = {}
-db['countVarStudent'] = 1
-db['countVarFaculty'] = 1
+for elem in db.keys():
+  if elem[:7] == 'student':
+    db['StudentCount'] += 1
+  elif elem[:7] == 'faculty':
+    db['FacultyCount'] += 1
 
 class User:
   def __init__(self, userLogin, userPassword, userName, userSurname):
@@ -43,13 +47,13 @@ class Student(User):
   def getAge(self):
     return self.__studentAge
 
-  def getYearOfEdu():
+  def getYearOfEdu(self):
     return self.__studentYearOfEdu
 
-  def getSpecMedCond():
+  def getSpecMedCond(self):
     return self.__studentSpecMedCond
 
-  def getStudentResidPrefer():
+  def getStudentResidPrefer(self):
     return self.__studentResidPrefer
 
   def getRoomPref(self):
@@ -234,15 +238,15 @@ def logOut():
   mainScreen()
 
 def newStudentAccount():
-  if not('students' in db.keys()):
-    db['students'] = []
   login = input('Choose your login: ')
   indicator = False
   while indicator == False:
     flag = True
-    for user in db['students']:
-      if user.__userLogin == login:
-        flag = False
+    for user in db.keys():
+      if user[:7] == 'student' or user[:7] == 'faculty':
+        if db[user].getUserLogin() == login:
+          flag = False
+          break
     if flag == False:
       print('Such login already exsists.')
       login = input('Choose your login: ')
@@ -256,9 +260,11 @@ def newStudentAccount():
     verification = input('Repeat your password: ')
   studentName = input('Enter your name: ')
   studentSurname = input('Enter your surname: ')
+  studentID = 'student' + str(db['StudentCount'] + 1)
+  print('Welcome to the system!')
+  print('Your student ID:', studentID)
   newStudent = Student(login, password, studentName, studentSurname)
-  db['student' + str(db['countVarStudent'])] = newStudent
-  return newStudent
+  db[studentID] = newStudent
 
 
 def mainScreen():
@@ -279,18 +285,17 @@ def mainScreen():
 
 
 def displayAllStudents():
+  #Creates bugs, needs correction
   for item in db.keys():
-    if 'student' in item:
+    if item[:7] == 'student':
       print(db[item].getFullName())
 
 # this is a model for how we will have student keys
-James = UpperClassStudent('userLogin', 'userPassword', 'userName', 'userSurname')
-db['student' + str(db['countVarStudent'])] = James
-print(db['student1'].getUserLogin())
+#James = UpperClassStudent('userLogin', 'userPassword', 'userName', 'userSurname')
+#db['student' + str(db['countVarStudent'])] = James
+#print(db['student1'].getUserLogin())
 
-displayAllStudents()
-print()
-while True:
-  mainScreen()
+print(db.keys())
+mainScreen()
 
 
