@@ -124,9 +124,9 @@ def initializeFaculty(facultyLogin, facultyPassword, facultyName, facultySurname
 def facultyFullName(facultyID):
   """This function combines the first name and the surname to get the full name."""
   return db[facultyID]['facultyName'] + ' ' + db[facultyID]['facultySurname']
-###not sure of what it does
+
 def logout():
-  """This function redirects the user to the main page."""
+  """This function logs out the user of their account."""
   print('You have successfully logged out.')
 
 
