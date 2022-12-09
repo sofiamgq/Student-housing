@@ -1,6 +1,7 @@
 from replit import db
 
 def initializeStudent(studentLogin, studentPassword, studentName, studentSurname, studentID):
+  """This is the init function, which starts the class. It also contains the main data that the objects in the class will require, such as student email and age."""
   db[studentID] = dict()
   db[studentID]['studentLogin'] = studentLogin
   db[studentID]['studentPassword'] = studentPassword
@@ -15,10 +16,13 @@ def initializeStudent(studentLogin, studentPassword, studentName, studentSurname
   db[studentID]['studentRoommatePrefer'] = None
   db[studentID]['studentSpecMedCond'] = None
 
+
 def studentFullName(studentID):
+  """This function combines the first name and the surname to get the full name."""
   return db[studentID]['studentName'] + ' ' + db[studentID]['studentSurname']
 
 def getAllStudents():
+  """This function allows the faculty member to view the names of all of the students."""
   studentList = []
   for elem in db.keys():
     if 'Student' in elem:
@@ -26,13 +30,15 @@ def getAllStudents():
   return studentList
 
 def changeStudentEmail(currentUser):
+  """This function allows students to change their email address."""
   email = input('Enter your email: ')
   while not('@' in email) or (' ' in email):
-    print('Please input valid email.')
+    print('Please input a valid email.')
     email = input('Enter your email: ')
   db[currentUser]['studentEmail'] = email
 
 def changeStudentAge(currentUser):
+  """This function allows a student to change their age."""
   age = input('Enter your age: ')
   flag = False
   while flag == False:
@@ -45,6 +51,7 @@ def changeStudentAge(currentUser):
   db[currentUser]['studentAge'] = age
 
 def changeStudentPhoneNum(currentUser):
+  """This function allows a student to change their phone number."""
   phoneNum = input('Enter your phone number in format +XX...X: ')
   while phoneNum[0] != '+':
     print('Please input your phone number in the right format.')
@@ -59,6 +66,7 @@ def changeStudentPhoneNum(currentUser):
   db[currentUser]['studentPhoneNum'] = phoneNum
 
 def changeStudentYearOfEdu(currentUser):
+  """This function allows a student to change their year of education."""
   yearOfEdu = input('Enter your year of education (1, 2, 3 or 4): ')
   while not(yearOfEdu in ['1', '2', '3', '4']):
     print('Please enter valid year of education.')
@@ -66,6 +74,7 @@ def changeStudentYearOfEdu(currentUser):
   db[currentUser]['studentYearOfEdu'] = yearOfEdu
 
 def changeStudentResidPrefer(currentUser):
+  """This funcyion allows a student to change their residence preference."""
   residPrefer = input('Enter your residence preference (1 for Residence Hall A and 2 for Residence Hall B): ')
   while not(residPrefer in ['1', '2']):
     print('Please input your residence preference in the correct format.')
@@ -73,6 +82,7 @@ def changeStudentResidPrefer(currentUser):
   db[currentUser]['studentResidPrefer'] = residPrefer
 
 def changeStudentRoomPrefer(currentUser):
+  """This function allows a student to update/change their room preference."""
   roomPrefer = input('Enter your room preference (1 for a single room and 2 for a double room): ')
   while not(roomPrefer in ['1', '2']):
     print('Please input your room preference in the correct format')
@@ -80,6 +90,7 @@ def changeStudentRoomPrefer(currentUser):
   db[currentUser]['studentRoomPrefer'] = roomPrefer
 
 def changeStudentRoommatePrefer(currentUser):
+  """This function allows a student to change their roommate preference."""
   if db[currentUser]['studentYearOfEdu'] == 1:
     print('We do not allow first-year students to choose a roommate, so you cannot set a rommate preference.')
   elif db[currentUser]['studentYearOfEdu'] == None:
@@ -98,10 +109,12 @@ def changeStudentRoommatePrefer(currentUser):
   db[currentUser]['studentRoommatePrefer'] = roommatePrefer
 
 def changeStudentSpecMedCond(currentUser):
+  """This function allows students to enter their specific medical conditions."""
   specMedCond = input('Enter your room preference: ')
   db[currentUser]['studentSpecMedCond'] = specMedCond
 
 def initializeFaculty(facultyLogin, facultyPassword, facultyName, facultySurname, facultyID):
+  """This is the init function, which starts the class. It also contains the main data that the objects in the class will require, such as faculty name and surname."""
   db[facultyID] = dict()
   db[facultyID]['facultyLogin'] = facultyLogin
   db[facultyID]['facultyPassword'] = facultyPassword
@@ -109,12 +122,16 @@ def initializeFaculty(facultyLogin, facultyPassword, facultyName, facultySurname
   db[facultyID]['facultySurname'] = facultySurname
 
 def facultyFullName(facultyID):
+  """This function combines the first name and the surname to get the full name."""
   return db[facultyID]['facultyName'] + ' ' + db[facultyID]['facultySurname']
-
+###not sure of what it does
 def logout():
+  """This function redirects the user to the main page."""
   print('You have successfully logged out.')
 
+
 def newStudentAccount():
+  """This function allows users to create a new student account."""
   login = input('Choose your login: ')
   indicator = False
   while indicator == False:
@@ -145,6 +162,7 @@ def newStudentAccount():
   return studentID
 
 def studentLogIn():
+  """This function allows a student to log into their account if it exists."""
   login = input('Enter your login: ')
   flag = False
   while flag == False:
@@ -165,6 +183,7 @@ def studentLogIn():
   return currentUser
 
 def facultyLogIn():
+  """This function allows a faculty member to log into their account if it exists."""
   login = input('Enter your login: ')
   flag = False
   while flag == False:
