@@ -367,6 +367,7 @@ def facultyPage(currentUser):
     logout()
 
 def mainscreen():
+  """This function is the main screen, which is the first page that users visualize, which asks them to either log in or sign up."""
   print('Welcome to the Student Housing Management System!')
   print('Enter 1 to create a new account\nEnter 2 to log in as a student\nEnter 3 to log in as a faculty member')
   mainScreenInput = input('Your answer: ')
@@ -384,6 +385,7 @@ def mainscreen():
     facultyPage(currentUser)
 
 def preparations():
+  """This function makes sure that there is at least one faculty member to be able to add more faculty members in the future. It also helps to keep track of the number of students and the number of faculty members."""
   if not('NumOfStud' in db.keys()):
     db['NumOfStud'] = 0
     db['NumOfFac'] = 0
