@@ -398,6 +398,6 @@ def preparations():
     initializeFaculty('FirstAdmin', 'Qwerty123', 'First', 'Administrator', 'Faculty1')
     db['NumOfFac'] += 1
 
-db.clear()
+#db.clear()
 preparations()
 mainscreen()
