@@ -8,12 +8,14 @@ db['countVarFaculty'] = 1
 
 class User:
   def __init__(self, userLogin, userPassword, userName, userSurname):
+    """This is the in it function, which starts the class. It also contains the main data that the objects in the class will require such as user name and password."""
     self.__userLogin = userLogin
     self.__userPassword = userPassword
     self.__userName = userName
     self.__userSurname = userSurname
 
   def getFullName(self):
+    """This function combines the first name and the surname to get the full name. """
     return self.__userName + ' ' + self.__userSurname
 
   def getUserLogin(self):
