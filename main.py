@@ -4,6 +4,7 @@ os.system("pip install pwinput")
 import pwinput
 
 def condPassword(password):
+  """This function checks if the conditions for the password are fulfilled. If they are, it returns True, then it can be verified in the functions of study sign up and add faculty member."""
   number= False
   characters= False
   uppercase= False
