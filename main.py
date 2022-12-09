@@ -1,9 +1,11 @@
 # coded some rough class stuff, mostly just thought we should get something down in replit. feel free to edit
 from replit import db
 
+
 db = {}
 db['countVarStudent'] = 1
 db['countVarFaculty'] = 1
+
 class User:
   def __init__(self, userLogin, userPassword, userName, userSurname):
     self.__userLogin = userLogin
@@ -13,6 +15,9 @@ class User:
 
   def getFullName(self):
     return self.__userName + ' ' + self.__userSurname
+
+  def getUserLogin(self):
+    return self.__userLogin
 
 class Student(User):
   def __init__(self, userLogin, userPassword, userName, userSurname):
@@ -178,7 +183,7 @@ class UpperClassStudent(Student):
 def facultyLogIn():
   username = input('What is your username: ')
   for faculty in db['faculty']:
-    if faculty.getUserName() == username:
+    if faculty.getUserLogin() == username:
       continue
     else:
       print('This username does not exist.')
@@ -193,15 +198,17 @@ def facultyLogIn():
 
 def studentLogIn():
   username = input('What is your username: ')
-  
-  for student in db['students']:
-    if student.getUserName() == username:
-      continue
+  for item in db.keys():
+    if 'student' in item:
+      print(db[item])
+      if db[item].getUserLogin() == username:
+        userKey = item
+        continue
     else:
       print('This username does not exist.')
       return False
       password = input('Enter password: ')
-  if db['students'].getPassword() == password:
+  if db[userKey].getPassword() == password:
     print('Login successful.')
     return True
   else:
@@ -280,10 +287,11 @@ def displayAllStudents():
 # this is a model for how we will have student keys
 James = UpperClassStudent('userLogin', 'userPassword', 'userName', 'userSurname')
 db['student' + str(db['countVarStudent'])] = James
-print(db['student1'].getFullName())
+print(db['student1'].getUserLogin())
 
 displayAllStudents()
 print()
-mainScreen()
+while True:
+  mainScreen()
 
 
