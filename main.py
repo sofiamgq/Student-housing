@@ -1,250 +1,127 @@
-# coded some rough class stuff, mostly just thought we should get something down in replit. feel free to edit
 from replit import db
 
-db['StudentCount'] = 0
-db['FacultyCount'] = 0
+def initializeStudent(studentLogin, studentPassword, studentName, studentSurname, studentID):
+  db[studentID] = dict()
+  db[studentID]['studentLogin'] = studentLogin
+  db[studentID]['studentPassword'] = studentPassword
+  db[studentID]['studentName'] = studentName
+  db[studentID]['studentSurname'] = studentSurname
+  db[studentID]['studentEmail'] = None
+  db[studentID]['studentPhoneNum'] = None
+  db[studentID]['studentAge'] = None
+  db[studentID]['studentYearOfEdu'] = None
+  db[studentID]['studentResidPrefer'] = None
+  db[studentID]['studentRoomPrefer'] = None
+  db[studentID]['studentRoommatePrefer'] = None
+  db[studentID]['studentSpecMedCond'] = None
 
-for elem in db.keys():
-  if elem[:7] == 'student':
-    db['StudentCount'] += 1
-  elif elem[:7] == 'faculty':
-    db['FacultyCount'] += 1
+def studentFullName(studentID):
+  return db[studentID]['studentName'] + ' ' + db[studentID]['studentSurname']
 
-class User:
-  def __init__(self, userLogin, userPassword, userName, userSurname):
-    """This is the in it function, which starts the class. It also contains the main data that the objects in the class will require such as user name and password."""
-    self.__userLogin = userLogin
-    self.__userPassword = userPassword
-    self.__userName = userName
-    self.__userSurname = userSurname
+def getAllStudents():
+  studentList = []
+  for elem in db.keys():
+    if 'Student' in elem:
+      studentList.append((elem, studentFullName(elem)))
+  return studentList
 
-  def getFullName(self):
-    """This function combines the first name and the surname to get the full name. """
-    return self.__userName + ' ' + self.__userSurname
+def changeStudentEmail(currentUser):
+  email = input('Enter your email: ')
+  while not('@' in email) or (' ' in email):
+    print('Please input valid email.')
+    email = input('Enter your email: ')
+  db[currentUser]['studentEmail'] = email
 
-  def getUserLogin(self):
-    return self.__userLogin
+def changeStudentAge(currentUser):
+  age = input('Enter your age: ')
+  flag = False
+  while flag == False:
+    try:
+      int_age = int(age)
+      flag = True
+    except ValueError:
+      print('Please input valid age.')
+      age = input('Enter your age: ')
+  db[currentUser]['studentAge'] = age
 
-class Student(User):
-  def __init__(self, userLogin, userPassword, userName, userSurname):
-    super().__init__(userLogin, userPassword, userName, userSurname)
-    self.__studentEmail = None
-    self.__studentPhoneNum = None
-    self.__studentAge = None
-    self.__studentYearOfEdu= None
-    self.__studentResidPrefer = None
-    self.__studentRoomPref = None
-    self.__studentSpecMedCond= None
-    self.__studentResidPrefer= None
-    self.__studentRoomPrefer= None
+def changeStudentPhoneNum(currentUser):
+  phoneNum = input('Enter your phone number in format +XX...X: ')
+  while phoneNum[0] != '+':
+    print('Please input your phone number in the right format.')
+    phoneNum = input('Enter your phone number: ')
+  flag = False
+  while flag == False:
+    try:
+      int_phoneNum = int(phoneNum[1:])
+    except ValueError:
+      print('Please input your phone number in the right format.')
+      phoneNum = input('Enter your phone number: ')
+  db[currentUser]['studentPhoneNum'] = phoneNum
 
-  def getPhoneNum(self):
-    return self.__studentPhoneNum
+def changeStudentYearOfEdu(currentUser):
+  yearOfEdu = input('Enter your year of education (1, 2, 3 or 4): ')
+  while not(yearOfEdu in ['1', '2', '3', '4']):
+    print('Please enter valid year of education.')
+    yearOfEdu = input('Enter your year of education (1, 2, 3 or 4): ')
+  db[currentUser]['studentYearOfEdu'] = yearOfEdu
 
-  def getEmail(self):
-    return self.__studentEmail
+def changeStudentResidPrefer(currentUser):
+  residPrefer = input('Enter your residence preference (1 for Residence Hall A and 2 for Residence Hall B): ')
+  while not(residPrefer in ['1', '2']):
+    print('Please input your residence preference in the correct format.')
+    residPrefer = input('Enter your residence preference (1 for Residence Hall A and 2 for Residence Hall B): ')
+  db[currentUser]['studentResidPrefer'] = residPrefer
 
-  def getAge(self):
-    return self.__studentAge
+def changeStudentRoomPrefer(currentUser):
+  roomPrefer = input('Enter your room preference (1 for a single room and 2 for a double room): ')
+  while not(roomPrefer in ['1', '2']):
+    print('Please input your room preference in the correct format')
+    roomPrefer = input('Enter your room preference (1 for a single room and 2 for a double room): ')
+  db[currentUser]['studentRoomPrefer'] = roomPrefer
 
-  def getYearOfEdu(self):
-    return self.__studentYearOfEdu
-
-  def getSpecMedCond(self):
-    return self.__studentSpecMedCond
-
-  def getStudentResidPrefer(self):
-    return self.__studentResidPrefer
-
-  def getRoomPref(self):
-    return self.__studentRoomPref
-
-  def modifyApplication(self):
-    return True
-
-  def submitNewApplication(self):
-    return True
-
-  def showRoomInfo (self):
-    return True
-
-  def setStudentEmail(self, email):
-    self.__studentEmail = email
-
-  def setStudentPhoneNum(self, phoneNum):
-    self.__studentPhoneNum = phoneNum
-
-  def setStudentAge(self, age):
-    self.__studentAge = age
-
-  def setStudentResidPrefer(self, residPrefer):
-    self.__studentResidPrefer = residPrefer
-
-  def setRoomPrefer(self, roomPrefer):
-    self.__studentRoomPref = roomPrefer
-  
-  def housingApplication(self):
-    answerEmailVer= False
-    answerEmail=input('Please enter your email: ')
-    if ' ' not in answerEmail and "@" in answerEmail:
-      answerEmailVer= True
-    while answerEmailVer== False:
-      print ('Please enter a valid email.')
-      answerEmail=input('Please enter your email: ')    
-    if answerEmailVer== True:
-      self.__studentEmail = answerEmail
-    answerPhone=input('Please enter your phone number: ')
-    answerPhoneVer= False
-    if len(answerPhone)==10 and type(int(answerPhone))==int:
-       answerPhoneVer= True
-    while answerPhoneVer== False:
-      print('Your phone number must have 10 numbers and must only contain numbers.')
-      answerPhone=input('Please enter your phone number: ')
-    if answerPhoneVer==True:
-      self.__studentPhoneNum = answerPhone
-
-    answerAgeVer=False
-    answerAge= input('Please enter your age: ')
-    if int(answerAge)>=18:
-      answerAgeVer=True
-    while answerAgeVer==False:
-      print('You must be at least 18 years old')
-      answerAge= input('Please enter your age: ')
-    if answerAgeVer==True:
-      self.__studentAge = answerAge
-
-    answerYearOfEdu=False
-    answerYearOfEdu= input('Please enter your year of education: ')
-    if len(answerYearOfEdu)==4 and type(int(answerYearOfEdu))==int:
-      answerYearOfEduVer=True
-    while answerYearOfEduVer==False:
-      print('Your answer must contain 4 digits.')
-      answerYearOfEdu = input('Please enter your year of education: ')
-    if answerYearOfEduVer==True:
-      self.__studentYearOfEdu=answerYearOfEdu
-    answerMedicalConditions= input('Please enter if you have any medical conditions: ')
-    self.__studentSpecMedCond=answerMedicalConditions
-    answerResidencePreference=input('Please tell us if you have any residence preference: ')
-    self.__studentResidPrefer= answerResidencePreference
-    answerRoomPreference= input('Please tell us if you have any room preference: ')
-    self.__studentRoomPrefer=answerRoomPreference 
-
-class Faculty(User):
-  def __init__(self, userLogin, userPassword, userName, userSurname):
-    super().__init__(userLogin, userPassword, userName, userSurname)
-    
-  def showSpecificStudentInfo(self, userName):
-# We should have a user ID system implmented, rather than looking up students by first and last name. This will stop the issue of having duplicate students with the same name. If there is a duplicate, this function should present faculty with the option to pick which student they mean (for example, by also displaying birthdate or another identifying piece of info)
-    return True
-
-
-
-  def createHousingPlan():
-    # run through some algorithm to find and return the ideal housing plan
-    return True
-    
-def addNewFacultyMember():
-  if not('faculty' in db.keys()):
-    db['faculty'] = []
-  login = input('Choose your login: ')
-  indicator = False
-  while indicator == False:
-    flag = True
-    for user in db['faculty']:
-      if user.__userLogin == login:
-        flag = False
+def changeStudentRoommatePrefer(currentUser):
+  if db[currentUser]['studentYearOfEdu'] == 1:
+    print('We do not allow first-year students to choose a roommate, so you cannot set a rommate preference.')
+  elif db[currentUser]['studentYearOfEdu'] == None:
+    print('You cannot set the rommate preference unless you set your year of education.')
+  roommatePrefer = input('Enter your roommate preference (full name of the student you want to live with): ')
+  studentList = getAllStudents()
+  flag = False
+  while flag == False:
+    for student in studentList:
+      if student[0] == roommatePrefer:
+        flag = True
+        break
     if flag == False:
-      print('Such login already exsists.')
-      login = input('Choose your login: ')
-    else:
-      indicator = True
-  password = input('Choose your password: ')
-  verification = input('Repeat your password: ')
-  while password != verification:
-    print('The passwords do not match. Try again.')
-    password = input('Choose your password: ')
-    verification = input('Repeat your password: ')
-  facultyName = input('Enter your name: ')
-  facultySurname = input('Enter your surname: ')
-  newFaculty = Faculty(login, password, facultyName, facultySurname)
-  db['faculty'].add(newFaculty)
+      print('There is no such student on our system.')
+      roommatePrefer = input('Enter your roommate preference (full name of the student you want to live with): ')
+  db[currentUser]['studentRoommatePrefer'] = roommatePrefer
 
-class UpperClassStudent(Student):
-  def __init__(self, userLogin, userPassword, userName, userSurname):
-    super().__init__(userLogin, userPassword, userName, userSurname)
-    self.__studentRoommatePref = None
+def changeStudentSpecMedCond(currentUser):
+  specMedCond = input('Enter your room preference: ')
+  db[currentUser]['studentSpecMedCond'] = specMedCond
 
-  def getStudentRoommatePref(self):
-    return self.__studentRoommatePref
+def initializeFaculty(facultyLogin, facultyPassword, facultyName, facultySurname, facultyID):
+  db[facultyID] = dict()
+  db[facultyID]['facultyLogin'] = facultyLogin
+  db[facultyID]['facultyPassword'] = facultyPassword
+  db[facultyID]['facultyName'] = facultyName
+  db[facultyID]['facultySurname'] = facultySurname
 
-  def updateStudentRoommatePref(self, newPref):
-    self.__studentRoommatePref = newPref
+def facultyFullName(facultyID):
+  return db[facultyID]['facultyName'] + ' ' + db[facultyID]['facultySurname']
 
-
-
-
-
-def studentLogIn():
-  username = input('What is your username: ')
-  for item in db.keys():
-    if 'student' in item:
-      print(db[item])
-      if db[item].getUserLogin() == username:
-        userKey = item
-        continue
-    else:
-      print('This username does not exist.')
-      return False
-      password = input('Enter password: ')
-  if db[userKey].getPassword() == password:
-    print('Login successful.')
-    return True
-  else:
-    print('Incorrect password.')
-    return False
-
-def facultyLogIn():
-  print ('Welcome to the faculty log in portal!')
-  username=input('Please enter your username: ')
-  for instance in db[db.keys()]:
-    if instance.getUserLogin() == username:
-      password=input('Please enter your password: ')
-      if instance.getPassword() == password:
-        'Welcome!'
-      else:
-        print('Please try again.')
-        facultyLogIn()
-    else:
-      print('Please try again.')
-      facultyLogIn()
-
-def adminLogIn():
-  print ('Welcome to the faculty log in portal!')
-  username=input('Please enter your username: ')
-  if username in db:
-    password=input('Please enter your password: ')
-    if db[username]==password:
-      'Welcome!'
-    else:
-      print('Please try again.')
-      facultyLogIn()
-  else:
-    print('Please try again.')
-    facultyLogIn()
-  # just check with admin, if data exists and password/username are matching
-
-def logOut():
-  print('You have successfully logged out')
-  mainScreen()
+def logout():
+  print('You have successfully logged out.')
 
 def newStudentAccount():
   login = input('Choose your login: ')
   indicator = False
   while indicator == False:
     flag = True
-    for user in db.keys():
-      if user[:7] == 'student' or user[:7] == 'faculty':
-        if db[user].getUserLogin() == login:
+    for elem in db.keys():
+      if 'Student' in elem:
+        if db[elem]['StudentLogIn'] == login:
           flag = False
           break
     if flag == False:
@@ -260,42 +137,175 @@ def newStudentAccount():
     verification = input('Repeat your password: ')
   studentName = input('Enter your name: ')
   studentSurname = input('Enter your surname: ')
-  studentID = 'student' + str(db['StudentCount'] + 1)
-  print('Welcome to the system!')
+  studentID = 'Student' + str(db['NumOfStud'] + 1)
+  initializeStudent(login, password, studentName, studentSurname, studentID)
+  db['NumOfStud'] += 1
+  print('Welcome to the system, ' + studentFullName(studentID) + '!')
   print('Your student ID:', studentID)
-  newStudent = Student(login, password, studentName, studentSurname)
-  db[studentID] = newStudent
+  return studentID
 
+def studentLogIn():
+  login = input('Enter your login: ')
+  flag = False
+  while flag == False:
+    for elem in db.keys():
+      if 'Student' in elem:
+        if db[elem]['studentLogin'] == login:
+          currentUser = elem
+          flag = True
+          break
+    if flag == False:
+      print('There is no user with such login.')
+      login = input('Enter your login: ')
+  password = input('Enter your password: ')
+  while password != db[currentUser]['studentPassword']:
+    print('The password is incorrect. Try again.')
+    password = input('Enter your password: ')
+  print('Welcome, ' + studentFullName(currentUser) + '!')
+  return currentUser
 
-def mainScreen():
+def facultyLogIn():
+  login = input('Enter your login: ')
+  flag = False
+  while flag == False:
+    for elem in db.keys():
+      if 'Faculty' in elem:
+        if db[elem]['facultyLogin'] == login:
+          currentUser = elem
+          flag = True
+          break
+    if flag == False:
+      print('There is no user with such login.')
+      login = input('Enter your login: ')
+  password = input('Enter your password: ')
+  while password != db[currentUser]['facultyPassword']:
+    print('The password is incorrect. Try again.')
+    password = input('Enter your password: ')
+  print('Welcome, ' + facultyFullName(currentUser) + '!')
+  return currentUser
+
+def manageOneAspect(currentUser, aspect):
+  if aspect == '1':
+    changeStudentEmail(currentUser)
+  elif aspect == '2':
+    changeStudentPhoneNum(currentUser)
+  elif aspect == '3':
+    changeStudentAge(currentUser)
+  elif aspect == '4':
+    changeStudentYearOfEdu(currentUser)
+  elif aspect == '5':
+    changeStudentResidPrefer(currentUser)
+  elif aspect == '6':
+    changeStudentRoomPrefer(currentUser)
+  elif aspect == '7':
+    changeStudentRoommatePrefer(currentUser)
+  elif aspect == '8':
+    changeStudentSpecMedCond(currentUser)
+  print('You have successfully updated your application.')
+  studentPage(currentUser)
+
+def manageHousingApplication(currentUser):
+  print('Enter 1 if you want to change a specific answer on your housing application\nEnter 2 if you want to start the housing application from the beginning')
+  ans = input('Your answer: ')
+  while not(ans in ['1', '2']):
+    print('Please enter a valid input.')
+    ans = input('Your answer: ')
+  if ans == '1':
+    print('Which aspect of the application do you want to change?\n1 - Email\n2 - Phone number\n 3 - Age\n4 - Year of education\n5 - Residence preference\n6 - Room preference\n7 - Roommate preference\n8 - Special medical conditions')
+    aspect = input('Your answer: ')
+    while not(aspect in ['1', '2', '3', '4', '5', '6', '7', '8']):
+      print('Please enter a valid input.')
+      aspect = input('Your answer: ')
+    manageOneAspect(currentUser, aspect)
+  elif ans == '2':
+    changeStudentEmail(currentUser)
+    changeStudentPhoneNum(currentUser)
+    changeStudentAge(currentUser)
+    changeStudentYearOfEdu(currentUser)
+    changeStudentResidPrefer(currentUser)
+    changeStudentRoomPrefer(currentUser)
+    print('Do you want to specify a rommate preference?\nEnter 1 if yes\nEnter 2 if no')
+    ans = input('Your answer: ')
+    while not (ans in ['1', '2']):
+      print('Please input valid answer.')
+      ans = input('Your answer: ')
+    if ans == '1':
+      changeStudentRoommatePrefer(currentUser)
+    changeStudentSpecMedCond(currentUser)
+    print('You have successfully completed your application!')
+    studentPage(currentUser)
+    
+def viewHousingApplication(currentUser):
+  print('Housing Application', currentUser)
+  print('Full Name:', studentFullName(currentUser))
+  print('Email:', db[currentUser]['studentEmail'])
+  print('Phone Number:', db[currentUser]['studentPhoneNum'])
+  print('Age:', db[currentUser]['studentAge'])
+  print('Year of education:', db[currentUser]['studentYearOfEdu'])
+  print('Residence preference:', db[currentUser]['studentResidPrefer'])
+  print('Room preference:', db[currentUser]['studentRoomPrefer'])
+  if 'studentRoommatePrefer' in db[currentUser].keys():
+    print('Roommate preference:', db[currentUser]['studentRoommatePrefer'])
+  print('Enter 1 if you want to change anything on your application\nEnter 2 if you want to go back to home page')
+  ans = input('Your answer: ')
+  while not(ans in ['1', '2']):
+    print('Please enter a valid input.')
+    ans = input('Your answer: ')
+  if ans == '1':
+    manageHousingApplication(currentUser)
+  elif ans == '2':
+    studentPage(currentUser)
+
+def studentPage(currentUser):
+  print('Enter 1 to start/edit your housing application\nEnter 2 to view your housing application\nEnter 3 to view the room information\nEnter 4 to log out')
+  studentPageInput = input('Your answer: ')
+  while not(studentPageInput in ['1', '2', '3', '4']):
+    print('Please enter a valid input.')
+    studentPageInput = input('Your answer: ')
+  if studentPageInput == '1':
+    manageHousingApplication(currentUser)
+  elif studentPageInput == '2':
+    viewHousingApplication(currentUser)
+  elif studentPageInput == '3':
+    pass
+  elif studentPageInput == '4':
+    logout()
+
+def facultyPage(currentUser):
+  pass
+
+def mainscreen():
   print('Welcome to the Student Housing Management System!')
-  print('Enter 1 to create a new account, enter 2 to log in as a student, enter 3 to log in as a faculty member, enter 4 to log out.')
+  print('Enter 1 to create a new account\nEnter 2 to log in as a student\nEnter 3 to log in as a faculty member')
   mainScreenInput = input('Your answer: ')
+  while not(mainScreenInput in ['1', '2', '3', '4']):
+    print('Please enter a valid input.')
+    mainScreenInput = input('Your answer: ')
   if mainScreenInput == '1':
-    newStudentAccount()
+    currentUser = newStudentAccount()
+    studentPage(currentUser)
   elif mainScreenInput == '2':
-    studentLogIn()
+    currentUser = studentLogIn()
+    studentPage(currentUser)
   elif mainScreenInput == '3':
-    facultyLogIn()
-  elif mainScreenInput=='4':
-    logOut()
-  else:
-    print('Please enter a valid input and try again.')
-    mainScreen()
+    currentUser = facultyLogIn()
+    facultyPage(currentUser)
+
+def preparations():
+  if not('NumOfStud' in db.keys()):
+    db['NumOfStud'] = 0
+    db['NumOfFac'] = 0
+    for elem in db.keys():
+      if 'Student' in elem:
+        db['NumOfStud'] += 1
+      elif 'Faculty' in elem:
+        db['NumOfFac'] += 1
 
 
-def displayAllStudents():
-  #Creates bugs, needs correction
-  for item in db.keys():
-    if item[:7] == 'student':
-      print(db[item].getFullName())
+if db['NumOfFac'] == 0:
+  initializeFaculty('FirstAdmin', 'Qwerty123', 'First', 'Administrator', 'Faculty1')
+  db['NumOfFac'] += 1
 
-# this is a model for how we will have student keys
-#James = UpperClassStudent('userLogin', 'userPassword', 'userName', 'userSurname')
-#db['student' + str(db['countVarStudent'])] = James
-#print(db['student1'].getUserLogin())
-
-print(db.keys())
-mainScreen()
-
-
+db.clear()
+preparations()
+mainscreen()
