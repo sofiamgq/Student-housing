@@ -204,6 +204,7 @@ def facultyLogIn():
   return currentUser
 
 def manageOneAspect(currentUser, aspect):
+  """This function allows the users to update their housing application and redirects them to the part of the application that they want to update."""
   if aspect == '1':
     changeStudentEmail(currentUser)
   elif aspect == '2':
@@ -224,6 +225,7 @@ def manageOneAspect(currentUser, aspect):
   studentPage(currentUser)
 
 def manageHousingApplication(currentUser):
+  """This is the function that asks students what part of their application they want to change, and then it redirects them to that section."""
   print('Enter 1 if you want to change a specific answer on your housing application\nEnter 2 if you want to start the housing application from the beginning')
   ans = input('Your answer: ')
   while not(ans in ['1', '2']):
@@ -255,6 +257,7 @@ def manageHousingApplication(currentUser):
     studentPage(currentUser)
     
 def viewHousingApplication(currentUser):
+  """This function allows students to visualize the information they entered for the housing application."""
   print('Housing Application', currentUser)
   print('Full Name:', studentFullName(currentUser))
   print('Email:', db[currentUser]['studentEmail'])
@@ -276,6 +279,7 @@ def viewHousingApplication(currentUser):
     studentPage(currentUser)
 
 def studentPage(currentUser):
+  """This function shows the student portal once they are logged in. It asks them what they want to do inside the page."""
   print('Enter 1 to start/edit your housing application\nEnter 2 to view your housing application\nEnter 3 to view the room information\nEnter 4 to log out')
   studentPageInput = input('Your answer: ')
   while not(studentPageInput in ['1', '2', '3', '4']):
@@ -291,6 +295,7 @@ def studentPage(currentUser):
     logout()
 
 def accesStudentInfo(currentUser):
+  """This function allows faculty members to see a list of all the students. It also allows them to view specific information about a student if they enter their student ID."""
   print('Enter 1 if you want to access the list of all the students and their student IDs\nEnter 2 if you want to access information about a specific student')
   ans = input('Your answer: ')
   while not(ans in ['1', '2']):
@@ -316,6 +321,7 @@ def accesStudentInfo(currentUser):
   facultyPage(currentUser)
 
 def addNewFaculty(currentUser):
+  """This function allows faculty members to add more faculty members if they are not already in the system."""
   login = input('Choose a login: ')
   indicator = False
   while indicator == False:
@@ -345,6 +351,7 @@ def addNewFaculty(currentUser):
 facultyPage(currentUser)
 
 def facultyPage(currentUser):
+  """This function is the faculty portal, and it asks the user what they want to do such as managing students or adding nee facukty members."""
   print('Enter 1 to access student information\nEnter 2 to add a new faculty member\nEnter 3 to get a housing plan\nEnter 4 to log out')
   facultyPageInput = input('Your answer: ')
   while not(facultyPageInput in ['1', '2', '3', '4']):
