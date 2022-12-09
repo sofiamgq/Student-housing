@@ -56,13 +56,9 @@ def changeStudentPhoneNum(currentUser):
   while phoneNum[0] != '+':
     print('Please input your phone number in the right format.')
     phoneNum = input('Enter your phone number: ')
-  flag = False
-  while flag == False:
-    try:
-      int_phoneNum = int(phoneNum[1:])
-    except ValueError:
-      print('Please input your phone number in the right format.')
-      phoneNum = input('Enter your phone number: ')
+  while not phoneNum[1:].isdigit():
+    print('Please input your phone number in the right format.')
+    phoneNum = input('Enter your phone number: ')
   db[currentUser]['studentPhoneNum'] = phoneNum
 
 def changeStudentYearOfEdu(currentUser):
@@ -91,8 +87,9 @@ def changeStudentRoomPrefer(currentUser):
 
 def changeStudentRoommatePrefer(currentUser):
   """This function allows a student to change their roommate preference."""
-  if db[currentUser]['studentYearOfEdu'] == 1:
+  if db[currentUser]['studentYearOfEdu'] == '1':
     print('We do not allow first-year students to choose a roommate, so you cannot set a rommate preference.')
+    return
   elif db[currentUser]['studentYearOfEdu'] == None:
     print('You cannot set the rommate preference unless you set your year of education.')
   roommatePrefer = input('Enter your roommate preference (full name of the student you want to live with): ')
@@ -232,7 +229,7 @@ def manageHousingApplication(currentUser):
     print('Please enter a valid input.')
     ans = input('Your answer: ')
   if ans == '1':
-    print('Which aspect of the application do you want to change?\n1 - Email\n2 - Phone number\n 3 - Age\n4 - Year of education\n5 - Residence preference\n6 - Room preference\n7 - Roommate preference\n8 - Special medical conditions')
+    print('Which aspect of the application do you want to change?\n1 - Email\n2 - Phone number\n3 - Age\n4 - Year of education\n5 - Residence preference\n6 - Room preference\n7 - Roommate preference\n8 - Special medical conditions')
     aspect = input('Your answer: ')
     while not(aspect in ['1', '2', '3', '4', '5', '6', '7', '8']):
       print('Please enter a valid input.')
@@ -256,27 +253,39 @@ def manageHousingApplication(currentUser):
     print('You have successfully completed your application!')
     studentPage(currentUser)
     
-def viewHousingApplication(currentUser):
+def viewHousingApplication(studentID, currentUser):
   """This function allows students to visualize the information they entered for the housing application."""
-  print('Housing Application', currentUser)
-  print('Full Name:', studentFullName(currentUser))
-  print('Email:', db[currentUser]['studentEmail'])
-  print('Phone Number:', db[currentUser]['studentPhoneNum'])
-  print('Age:', db[currentUser]['studentAge'])
-  print('Year of education:', db[currentUser]['studentYearOfEdu'])
-  print('Residence preference:', db[currentUser]['studentResidPrefer'])
-  print('Room preference:', db[currentUser]['studentRoomPrefer'])
-  if 'studentRoommatePrefer' in db[currentUser].keys():
-    print('Roommate preference:', db[currentUser]['studentRoommatePrefer'])
-  print('Enter 1 if you want to change anything on your application\nEnter 2 if you want to go back to home page')
-  ans = input('Your answer: ')
-  while not(ans in ['1', '2']):
-    print('Please enter a valid input.')
+  print('Housing Application', studentID)
+  print('Full Name:', studentFullName(studentID))
+  print('Email:', db[studentID]['studentEmail'])
+  print('Phone Number:', db[studentID]['studentPhoneNum'])
+  print('Age:', db[studentID]['studentAge'])
+  print('Year of education:', db[studentID]['studentYearOfEdu'])
+  if db[studentID]['studentResidPrefer'] == '1':
+    print('Residence preference:', 'Residence Hall A')
+  elif db[studentID]['studentResidPrefer'] == '2':
+    print('Residence preference:', 'Residence Hall B')
+  elif db[studentID]['studentResidPrefer'] == None:
+    print('Residence preference:', None)
+  if db[studentID]['studentRoomPrefer'] == '1':
+    print('Room preference:', 'single room')
+  elif db[studentID]['studentRoomPrefer'] == '2':
+    print('Room preference:', 'double room')
+  elif db[studentID]['studentRoomPrefer'] == None:
+    print('Room preference:', None)
+  print('Roommate preference:', db[studentID]['studentRoommatePrefer'])
+  if 'Student' in currentUser:
+    print('Enter 1 if you want to change anything on your application\nEnter 2 if you want to go back to home page')
     ans = input('Your answer: ')
-  if ans == '1':
-    manageHousingApplication(currentUser)
-  elif ans == '2':
-    studentPage(currentUser)
+    while not(ans in ['1', '2']):
+      print('Please enter a valid input.')
+      ans = input('Your answer: ')
+    if ans == '1':
+      manageHousingApplication(currentUser)
+    elif ans == '2':
+      studentPage(currentUser)
+  else:
+    facultyPage(currentUser)
 
 def studentPage(currentUser):
   """This function shows the student portal once they are logged in. It asks them what they want to do inside the page."""
@@ -288,9 +297,10 @@ def studentPage(currentUser):
   if studentPageInput == '1':
     manageHousingApplication(currentUser)
   elif studentPageInput == '2':
-    viewHousingApplication(currentUser)
+    viewHousingApplication(currentUser, currentUser)
   elif studentPageInput == '3':
     print('Available residence halls:\n- Residence Hall A\n- Residence Hall B\nAvailable Rooms:\n- A double room for 2 people\n- A single room for 1 person')
+    studentPage(currentUser)
   elif studentPageInput == '4':
     logout()
 
@@ -313,7 +323,7 @@ def accessStudentInfo(currentUser):
       for elem in studentList:
         if elem[0] == student:
           flag == True
-          print(viewHousingApplication(student))
+          print(viewHousingApplication(student, currentUser))
           break
       if flag == False:
         print('Please input a valid student ID.')
@@ -358,9 +368,9 @@ def facultyPage(currentUser):
     print('Please enter a valid input.')
     facultyPageInput = input('Your answer: ')
   if facultyPageInput == '1':
-    accessStudentInfo()
+    accessStudentInfo(currentUser)
   elif facultyPageInput == '2':
-    addNewFaculty()
+    addNewFaculty(currentUser)
   elif facultyPageInput == '3':
     pass
   elif facultyPageInput == '4':
@@ -398,6 +408,5 @@ def preparations():
     initializeFaculty('FirstAdmin', 'Qwerty123', 'First', 'Administrator', 'Faculty1')
     db['NumOfFac'] += 1
 
-#db.clear()
 preparations()
 mainscreen()
