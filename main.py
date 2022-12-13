@@ -469,8 +469,32 @@ def generateHousingAssignments():
   RoommateAssignmentsDormA = []
   RoommateAssignmentsDormB = []
   # Generate roommate assignments within the dorm by creating sets of tupples based on roommate specifications
-  for student in dormAList:
-    
+  # pair roommates who have requested each other by name
+  for student1 in dormAList:
+    for student2 in dormAList:
+      if db[student1]['studentRoommatePrefer'] == db[student2]['studentRoommatePrefer']:
+        dormAList.remove(student1)
+        dormAList.remove(student2)
+        roommateTuple = (student1, student2)
+        RoommateAssignmentsDormA.append(roommateTuple)
+  # pair  students of the same grade level
+  for student1 in dormAList:
+    for student2 in dormAList:
+      if db[student1]['studentYearOfEdu'] == db[student2]['studentYearOfEdu']:
+        dormAList.remove(student1)
+        dormAList.remove(student2)
+        roommateTuple = (student1, student2)
+        RoommateAssignmentsDormA.append(roommateTuple)
+  for student1 in dormAList:
+    for student2 in dormAList:
+        dormAList.remove(student1)
+        dormAList.remove(student2)
+        roommateTuple = (student1, student2)
+        RoommateAssignmentsDormA.append(roommateTuple)
+  print()
+  print('Dorm A Roommate Assignments:')
+  for tuple in RoommateAssignmentsDormA:
+    print(db[tuple[0]]['studentName'] + ':' + db[tuple[1]]['studentName'])
         
 
 preparations()
