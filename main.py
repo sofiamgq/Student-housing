@@ -458,12 +458,10 @@ def generateHousingAssignments():
   # Assigns students to dorm A if they indicated this as their first choice. Otherwise, assigns to dorm B until dorm B is full. Then, assigns to overflow after both dorms are full.
   for elem in db.keys():
     if 'Student' in elem:
-      print(db[elem]['studentResidPrefer'])
       if dormAAvailable > 0:
         if db[elem]['studentResidPrefer'] == 'dorm A':
           dormAAvailable -= 1
           dormAList.append(elem)
-          print(dormAList)
         elif dormBAvailable > 0:
           dormBAvailable -= 1
           dormBList.append(elem)
@@ -540,11 +538,11 @@ initializeStudent('studentLogin3', 'studentPassword3', 'Thomas', 'Boyle', 'Stude
 initializeStudent('studentLogin3', 'studentPassword3', 'Astrid', 'Faustman', 'Student4')
 initializeStudent('studentLogin3', 'studentPassword3', 'Tugo', "'The King'", 'Student6')
 initializeStudent('studentLogin3', 'studentPassword3', 'Teo', 'Blind', 'Student5')
-# this isn't working for some reason -- values remain as 'none'. why?
-db['Student1']['studentResidPrefer'] == 'dorm A'
-db['Student2']['studentResidPrefer'] == 'dorm A'
-db['Student3']['studentResidPrefer'] == 'dorm A'
-db['Student4']['studentResidPrefer'] == 'dorm A'
+
+db['Student1']['studentResidPrefer'] = 'dorm A'
+db['Student2']['studentResidPrefer'] = 'dorm A'
+db['Student3']['studentResidPrefer'] = 'dorm A'
+db['Student4']['studentResidPrefer'] = 'dorm A'
 
 
 generateHousingAssignments()
