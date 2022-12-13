@@ -458,10 +458,12 @@ def generateHousingAssignments():
   # Assigns students to dorm A if they indicated this as their first choice. Otherwise, assigns to dorm B until dorm B is full. Then, assigns to overflow after both dorms are full.
   for elem in db.keys():
     if 'Student' in elem:
+      print(db[elem]['studentResidPrefer'])
       if dormAAvailable > 0:
-        if db[elem]['studentRoomPrefer'] == 'dorm A':
+        if db[elem]['studentResidPrefer'] == 'dorm A':
           dormAAvailable -= 1
           dormAList.append(elem)
+          print(dormAList)
         elif dormBAvailable > 0:
           dormBAvailable -= 1
           dormBList.append(elem)
@@ -486,50 +488,65 @@ def generateHousingAssignments():
 def returnRoommateList(listOfStudents):
   RoommmateAssignmentsList = []
   # Generate roommate assignments within the dorm by creating sets of tupples based on roommate specifications
-  # pair roommates who have requested each other by name
+  # pair roommates who have requested each other by name. Ignores if students have 'None' in this category
   for student1 in listOfStudents:
     for student2 in listOfStudents:
       if student2 == student1:
         continue
       else:
-        if db[student1]['studentRoommatePrefer'] == db[student2]['studentRoommatePrefer']:
+        if db[student1]['studentRoommatePrefer'] == db[student2]['studentRoommatePrefer'] and db[student1]['studentRoommatePrefer'] != None:
           listOfStudents.remove(student1)
           listOfStudents.remove(student2)
           roommateTuple = (student1, student2)
           RoommmateAssignmentsList.append(roommateTuple)
     break
-  # pair  students of the same grade level
+  # pair  students of the same grade level. Ignores if students have 'None' in this category
   for student1 in listOfStudents:
     for student2 in listOfStudents:
       if student2 == student1:
         continue
       else:
-        if db[student1]['studentYearOfEdu'] == db[student2]['studentYearOfEdu']:
+        if db[student1]['studentYearOfEdu'] == db[student2]['studentYearOfEdu'] and db[student1]['studentRoommatePrefer'] != None:
           listOfStudents.remove(student1)
           listOfStudents.remove(student2)
           roommateTuple = (student1, student2)
           RoommmateAssignmentsList.append(roommateTuple)
     break
-  for student1 in listOfStudents:
-    for student2 in listOfStudents:
-      if student2 == student1:
-        continue
-      else:
-        listOfStudents.remove(student1)
-        listOfStudents.remove(student2)
-        roommateTuple = (student1, student2)
-        RoommmateAssignmentsList.append(roommateTuple)
-    break
+  while len(listOfStudents) >= 2:
+    for student1 in listOfStudents:
+      for student2 in listOfStudents:
+        if student2 == student1:
+          continue
+        else:
+          try:
+            listOfStudents.remove(student1)
+            listOfStudents.remove(student2)
+            roommateTuple = (student1, student2)
+            RoommmateAssignmentsList.append(roommateTuple)
+          except:
+            pass
+      break
   print('Unassigned students: ' + str(listOfStudents))
   return RoommmateAssignmentsList
     
       
 #initializeFaculty('FirstAdmin', 'Qwerty123', 'First', 'Administrator', 'Faculty1')  
 #db.clear()
-    
-initializeStudent('studentLogin1', 'studentPassword1', 'studentName1', 'studentSurname1', 'Student1')
-initializeStudent('studentLogin2', 'studentPassword2', 'studentName2', 'studentSurname2', 'Student2')
-initializeStudent('studentLogin3', 'studentPassword3', 'studentName3', 'studentSurname3', 'Student3')
+
+db.clear()
+initializeStudent('studentLogin1', 'studentPassword1', 'Simon', 'Rutter', 'Student1')
+initializeStudent('studentLogin2', 'studentPassword2', 'Michael', 'Cornell', 'Student2')
+initializeStudent('studentLogin3', 'studentPassword3', 'Thomas', 'Boyle', 'Student3')
+initializeStudent('studentLogin3', 'studentPassword3', 'Astrid', 'Faustman', 'Student4')
+initializeStudent('studentLogin3', 'studentPassword3', 'Tugo', "'The King'", 'Student6')
+initializeStudent('studentLogin3', 'studentPassword3', 'Teo', 'Blind', 'Student5')
+# this isn't working for some reason -- values remain as 'none'. why?
+db['Student1']['studentResidPrefer'] == 'dorm A'
+db['Student2']['studentResidPrefer'] == 'dorm A'
+db['Student3']['studentResidPrefer'] == 'dorm A'
+db['Student4']['studentResidPrefer'] == 'dorm A'
+
+
 generateHousingAssignments()
 
 preparations()
