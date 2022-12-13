@@ -7,12 +7,12 @@ from faculty_initialization import *
 from housing_application import *
 
 def generateHousingAssignments():
+  """ Assigns students to dorm A if they indicated this as their first choice. Otherwise, assigns to dorm B until dorm B is full. Then, assigns to overflow after both dorms are full."""
   dormAAvailable = 50
   dormAList = []
   dormBAvailable = 50
   dormBList = []
   Overflow = []
-  # Assigns students to dorm A if they indicated this as their first choice. Otherwise, assigns to dorm B until dorm B is full. Then, assigns to overflow after both dorms are full.
   for elem in db.keys():
     if 'Student' in elem:
       if dormAAvailable > 0:
@@ -41,9 +41,8 @@ def generateHousingAssignments():
 
 
 def returnRoommateList(listOfStudents):
+  """Generate roommate assignments within the dorm by creating sets of tupples based on roommate specifications. It pair roommates who have requested each other by name. Ignores if students have 'None' in this category."""
   RoommmateAssignmentsList = []
-  # Generate roommate assignments within the dorm by creating sets of tupples based on roommate specifications
-  # pair roommates who have requested each other by name. Ignores if students have 'None' in this category
   for student1 in listOfStudents:
     for student2 in listOfStudents:
       if student2 == student1:
@@ -83,3 +82,5 @@ def returnRoommateList(listOfStudents):
       break
   print('Unassigned students: ' + str(listOfStudents))
   return RoommmateAssignmentsList
+
+#generateHousingAssignments()
