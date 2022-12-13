@@ -1,6 +1,6 @@
 from replit import db
 import os
-os.system("pip install pwinput")
+#os.system("pip install pwinput")
 import pwinput
 
 def condPassword(password):
@@ -23,6 +23,7 @@ def condPassword(password):
     return True
   else:
     return False
+  
 def initializeStudent(studentLogin, studentPassword, studentName, studentSurname, studentID):
   """This is the init function, which starts the class. It also contains the main data that the objects in the class will require, such as student email and age."""
   db[studentID] = dict()
@@ -38,7 +39,6 @@ def initializeStudent(studentLogin, studentPassword, studentName, studentSurname
   db[studentID]['studentRoomPrefer'] = None
   db[studentID]['studentRoommatePrefer'] = None
   db[studentID]['studentSpecMedCond'] = None
-
 
 def studentFullName(studentID):
   """This function combines the first name and the surname to get the full name."""
@@ -413,7 +413,7 @@ def facultyPage(currentUser):
   elif facultyPageInput == '2':
     addNewFaculty(currentUser)
   elif facultyPageInput == '3':
-    pass
+    generateHousingAssignments()
   elif facultyPageInput == '4':
     logout()
 
@@ -468,39 +468,52 @@ def generateHousingAssignments():
       else:
         print('All dorms full')
         Overflow.append(elem)
-        
-  RoommateAssignmentsDormA = []
-  RoommateAssignmentsDormB = []
-  # Generate roommate assignments within the dorm by creating sets of tupples based on roommate specifications
-  # pair roommates who have requested each other by name
-  for student1 in dormAList:
-    for student2 in dormAList:
-      if db[student1]['studentRoommatePrefer'] == db[student2]['studentRoommatePrefer']:
-        dormAList.remove(student1)
-        dormAList.remove(student2)
-        roommateTuple = (student1, student2)
-        RoommateAssignmentsDormA.append(roommateTuple)
-  # pair  students of the same grade level
-  for student1 in dormAList:
-    for student2 in dormAList:
-      if db[student1]['studentYearOfEdu'] == db[student2]['studentYearOfEdu']:
-        dormAList.remove(student1)
-        dormAList.remove(student2)
-        roommateTuple = (student1, student2)
-        RoommateAssignmentsDormA.append(roommateTuple)
-  for student1 in dormAList:
-    for student2 in dormAList:
-        dormAList.remove(student1)
-        dormAList.remove(student2)
-        roommateTuple = (student1, student2)
-        RoommateAssignmentsDormA.append(roommateTuple)
+  
+  RoommateAssignmentsDormA = returnRoommateList(dormAList)
   print()
   print('Dorm A Roommate Assignments:')
   for tuple in RoommateAssignmentsDormA:
-    print(db[tuple[0]]['studentName'] + ':' + db[tuple[1]]['studentName'])
+    print(studentFullName(tuple[0]) + ':' + studentFullName(tuple[1]))
+  print('Dorm B Roommate Assignments:')
+  RoommateAssignmentsDormB = returnRoommateList(dormBList)
+  for tuple in RoommateAssignmentsDormB:
+    print(studentFullName(tuple[0]) + ':' + studentFullName(tuple[1]))
 
 
-
+def returnRoommateList(listOfStudents):
+  RoommmateAssignmentsList = []
+  # Generate roommate assignments within the dorm by creating sets of tupples based on roommate specifications
+  # pair roommates who have requested each other by name
+  for student1 in listOfStudents:
+    for student2 in listOfStudents:
+      if db[student1]['studentRoommatePrefer'] == db[student2]['studentRoommatePrefer']:
+        listOfStudents.remove(student1)
+        listOfStudents.remove(student2)
+        roommateTuple = (student1, student2)
+        RoommmateAssignmentsList.append(roommateTuple)
+  # pair  students of the same grade level
+  for student1 in listOfStudents:
+    for student2 in listOfStudents:
+      if db[student1]['studentYearOfEdu'] == db[student2]['studentYearOfEdu']:
+        listOfStudents.remove(student1)
+        listOfStudents.remove(student2)
+        roommateTuple = (student1, student2)
+        RoommmateAssignmentsList.append(roommateTuple)
+  for student1 in listOfStudents:
+    for student2 in listOfStudents:
+        listOfStudents.remove(student1)
+        listOfStudents.remove(student2)
+        roommateTuple = (student1, student2)
+        RoommmateAssignmentsList.append(roommateTuple)
+  return RoommmateAssignmentsList
+      
+#initializeFaculty('FirstAdmin', 'Qwerty123', 'First', 'Administrator', 'Faculty1')  
+#db.clear()
+    
+initializeStudent('studentLogin1', 'studentPassword1', 'studentName1', 'studentSurname1', 'Student1')
+initializeStudent('studentLogin2', 'studentPassword2', 'studentName2', 'studentSurname2', 'Student2')
+initializeStudent('studentLogin3', 'studentPassword3', 'studentName3', 'studentSurname3', 'Student3')
+generateHousingAssignments()
 
 preparations()
 mainscreen()
