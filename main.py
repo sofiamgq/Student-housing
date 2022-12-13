@@ -462,22 +462,25 @@ def generateHousingAssignments():
         if db[elem]['studentRoomPrefer'] == 'dorm A':
           dormAAvailable -= 1
           dormAList.append(elem)
-      elif dormBAvailable > 0:
-        dormBAvailable -= 1
-        dormBList.append(elem)
+        elif dormBAvailable > 0:
+          dormBAvailable -= 1
+          dormBList.append(elem)
       else:
         print('All dorms full')
         Overflow.append(elem)
   
-  RoommateAssignmentsDormA = returnRoommateList(dormAList)
-  print()
   print('Dorm A Roommate Assignments:')
+  RoommateAssignmentsDormA = returnRoommateList(dormAList)
+  if len(RoommateAssignmentsDormA) == 0:
+    print('No Students requested to be assigned to dorm A. Dorm A is empty!')
   for tuple in RoommateAssignmentsDormA:
-    print(studentFullName(tuple[0]) + ':' + studentFullName(tuple[1]))
+    print(studentFullName(tuple[0]) + ' : ' + studentFullName(tuple[1]))
+  print()
   print('Dorm B Roommate Assignments:')
   RoommateAssignmentsDormB = returnRoommateList(dormBList)
   for tuple in RoommateAssignmentsDormB:
-    print(studentFullName(tuple[0]) + ':' + studentFullName(tuple[1]))
+    print(studentFullName(tuple[0]) + ' : ' + studentFullName(tuple[1]))
+    print()
 
 
 def returnRoommateList(listOfStudents):
@@ -486,26 +489,40 @@ def returnRoommateList(listOfStudents):
   # pair roommates who have requested each other by name
   for student1 in listOfStudents:
     for student2 in listOfStudents:
-      if db[student1]['studentRoommatePrefer'] == db[student2]['studentRoommatePrefer']:
-        listOfStudents.remove(student1)
-        listOfStudents.remove(student2)
-        roommateTuple = (student1, student2)
-        RoommmateAssignmentsList.append(roommateTuple)
+      if student2 == student1:
+        continue
+      else:
+        if db[student1]['studentRoommatePrefer'] == db[student2]['studentRoommatePrefer']:
+          listOfStudents.remove(student1)
+          listOfStudents.remove(student2)
+          roommateTuple = (student1, student2)
+          RoommmateAssignmentsList.append(roommateTuple)
+    break
   # pair  students of the same grade level
   for student1 in listOfStudents:
     for student2 in listOfStudents:
-      if db[student1]['studentYearOfEdu'] == db[student2]['studentYearOfEdu']:
-        listOfStudents.remove(student1)
-        listOfStudents.remove(student2)
-        roommateTuple = (student1, student2)
-        RoommmateAssignmentsList.append(roommateTuple)
+      if student2 == student1:
+        continue
+      else:
+        if db[student1]['studentYearOfEdu'] == db[student2]['studentYearOfEdu']:
+          listOfStudents.remove(student1)
+          listOfStudents.remove(student2)
+          roommateTuple = (student1, student2)
+          RoommmateAssignmentsList.append(roommateTuple)
+    break
   for student1 in listOfStudents:
     for student2 in listOfStudents:
+      if student2 == student1:
+        continue
+      else:
         listOfStudents.remove(student1)
         listOfStudents.remove(student2)
         roommateTuple = (student1, student2)
         RoommmateAssignmentsList.append(roommateTuple)
+    break
+  print('Unassigned students: ' + str(listOfStudents))
   return RoommmateAssignmentsList
+    
       
 #initializeFaculty('FirstAdmin', 'Qwerty123', 'First', 'Administrator', 'Faculty1')  
 #db.clear()
