@@ -2,6 +2,9 @@ from replit import db
 import os
 #os.system("pip install pwinput")
 import pwinput
+from student_initialization import *
+from faculty_initialization import *
+from housing_application import *
 
 def generateHousingAssignments():
   dormAAvailable = 50

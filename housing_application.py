@@ -2,6 +2,9 @@ from replit import db
 import os
 #os.system("pip install pwinput")
 import pwinput
+from student_initialization import *
+from faculty_initialization import *
+from housing_assignment import *
 
 def manageOneAspect(currentUser, aspect):
   """This function allows the users to update their housing application and redirects them to the part of the application that they want to update."""

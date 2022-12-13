@@ -2,6 +2,9 @@ from replit import db
 import os
 #os.system("pip install pwinput")
 import pwinput
+from faculty_initialization import *
+from housing_application import *
+from housing_assignment import *
 
 def initializeStudent(studentLogin, studentPassword, studentName, studentSurname, studentID):
   """This is the init function, which starts the class. It also contains the main data that the objects in the class will require, such as student email and age."""
