@@ -1,4 +1,3 @@
-# coded some rough class stuff, mostly just thought we should get something down in replit. feel free to edit
 from replit import db
 
 db = {}

@@ -446,5 +446,32 @@ def preparations():
     initializeFaculty('FirstAdmin', 'Qwerty123', 'First', 'Administrator', 'Faculty1')
     db['NumOfFac'] += 1
 
+def generateHousingAssignments():
+  dormAAvailable = 50
+  dormAList = []
+  dormBAvailable = 50
+  dormBList = []
+  Overflow = []
+  # Assigns students to dorm A if they indicated this as their first choice. Otherwise, assigns to dorm B until dorm B is full. Then, assigns to overflow after both dorms are full.
+  for elem in db.keys():
+    if 'Student' in elem:
+      if dormAAvailable > 0:
+        if db[elem]['studentRoomPrefer'] == 'dorm A':
+          dormAAvailable -= 1
+          dormAList.append(elem)
+      elif dormBAvailable > 0:
+        dormBAvailable -= 1
+        dormBList.append(elem)
+      else:
+        print('All dorms full')
+        Overflow.append(elem)
+        
+  RoommateAssignmentsDormA = []
+  RoommateAssignmentsDormB = []
+  # Generate roommate assignments within the dorm by creating sets of tupples based on roommate specifications
+  for student in dormAList:
+    
+        
+
 preparations()
 mainscreen()
