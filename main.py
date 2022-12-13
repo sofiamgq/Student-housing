@@ -359,6 +359,9 @@ def accessStudentInfo(currentUser):
         print('Please input a valid student ID.')
         student = input('Enter student\'s ID: ')
   facultyPage(currentUser)
+  
+def returnStudentFullName(elem):
+  return db[elem]['studentName'] + ' ' + db[elem]['studentSurname']
 
 def addNewFaculty(currentUser):
   """This function allows faculty members to add more faculty members if they are not already in the system."""
@@ -445,7 +448,7 @@ def preparations():
   if db['NumOfFac'] == 0:
     initializeFaculty('FirstAdmin', 'Qwerty123', 'First', 'Administrator', 'Faculty1')
     db['NumOfFac'] += 1
-
+  
 def generateHousingAssignments():
   dormAAvailable = 50
   dormAList = []
@@ -495,7 +498,9 @@ def generateHousingAssignments():
   print('Dorm A Roommate Assignments:')
   for tuple in RoommateAssignmentsDormA:
     print(db[tuple[0]]['studentName'] + ':' + db[tuple[1]]['studentName'])
-        
+
+
+
 
 preparations()
 mainscreen()
